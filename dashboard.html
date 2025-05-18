@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vinkor - Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+
+  <!-- HEADER -->
+  <header class="bg-[#0a1f44] text-white flex items-center justify-between px-6 py-4 shadow-md">
+    <div class="flex items-center space-x-3">
+      <img src="/VINKOR.png" alt="Logo Vinkor" class="h-10 w-auto" />
+      <h1 class="text-2xl font-bold">Dashboard</h1>
+    </div>
+    <button id="logoutBtn" class="bg-cyan-400 hover:bg-cyan-500 text-[#0a1f44] font-semibold px-4 py-2 rounded-md transition">
+      Sair
+    </button>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="flex-grow container mx-auto px-6 py-10">
+
+    <h2 class="text-3xl font-semibold mb-6">Olá, Usuário!</h2>
+
+    <section class="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+
+      <a href="#" class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
+        <h3 class="text-xl font-bold mb-2">🔍 Buscar Serviços</h3>
+        <p>Encontre profissionais e serviços para o que você precisa.</p>
+      </a>
+
+      <a href="#" class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
+        <h3 class="text-xl font-bold mb-2">📢 Anunciar Currículo</h3>
+        <p>Divulgue suas habilidades e serviços para mais pessoas.</p>
+      </a>
+
+      <a href="#" class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
+        <h3 class="text-xl font-bold mb-2">🎓 Cursos e Formações</h3>
+        <p>Participe de cursos e aprimore suas competências.</p>
+      </a>
+
+      <a href="#" class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition">
+        <h3 class="text-xl font-bold mb-2">🧰 Ferramentas</h3>
+        <p>Utilize recursos que facilitam sua rotina profissional.</p>
+      </a>
+
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-[#0a1f44] text-white text-center py-4">
+    <p>&copy; 2025 Vinkor
