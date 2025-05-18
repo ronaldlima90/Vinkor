@@ -39,9 +39,10 @@
           </div>
           <!-- Botão Login -->
           <a
-            href="#login"
+            href="#"
+            id="loginBtn"
             class="bg-cyan-400 text-[#0a1f44] font-semibold px-4 py-2 rounded-md hover:bg-cyan-500 transition"
-            >Login</a
+            >Entrar</a
           >
         </div>
 
@@ -107,10 +108,17 @@
     >
   </section>
 
-  <!-- FOOTER -->
   <footer class="bg-[#0a1f44] text-white text-center py-4 mt-auto">
     <p>&copy; 2025 Vinkor. Todos os direitos reservados.</p>
   </footer>
+
+  <script>
+    document.getElementById('loginBtn').addEventListener('click', function(e) {
+      e.preventDefault();
+      localStorage.setItem('vinkorLoggedIn', 'true');
+      window.location.href = 'dashboard.html';
+    });
+  </script>
 
 </body>
 </html>
