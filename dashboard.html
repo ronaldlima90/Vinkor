@@ -1,184 +1,180 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="h-full bg-gray-50">
+<html lang="pt-BR" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dashboard - Vinkor</title>
+  <title>Dashboard Vinkor</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="h-full flex flex-col">
+<body class="bg-gray-50 min-h-screen flex flex-col">
 
-  <!-- Navbar fixa -->
-  <nav class="fixed top-0 left-0 right-0 bg-[#0a1f44] text-white flex items-center justify-between h-16 px-6 shadow-md z-50">
-    <div class="flex items-center space-x-4">
-      <img src="/VINKOR.png" alt="Vinkor Logo" class="h-10" />
-      <span class="font-bold text-xl">Vinkor</span>
+  <!-- Top bar -->
+  <header class="bg-white shadow p-4 flex items-center justify-between sticky top-0 z-30">
+    <div class="flex items-center gap-4">
+      <img src="/VINKOR.png" alt="Vinkor Logo" class="w-12" />
+      <h1 class="text-xl font-bold text-blue-700">Vinkor</h1>
     </div>
-    <div class="flex items-center space-x-6 flex-1 max-w-3xl">
-      <input id="locationInput" type="text" placeholder="Digite sua cidade ou CEP (ex: Leme, SP)" 
-        class="w-full rounded px-4 py-2 text-gray-800 focus:outline-none" />
-      <button id="searchBtn" 
-        class="ml-2 bg-cyan-400 text-[#0a1f44] px-4 py-2 rounded hover:bg-cyan-500 transition">
-        Buscar
-      </button>
-    </div>
-    <div class="flex items-center space-x-6">
-      <span id="userGreeting">Olá, Usuário</span>
-      <button id="logoutBtn" class="bg-cyan-400 text-[#0a1f44] px-4 py-2 rounded hover:bg-cyan-500 transition">
-        Sair
-      </button>
-    </div>
-  </nav>
 
-  <div class="flex flex-1 pt-16 min-h-0">
+    <form id="searchForm" class="flex gap-2 flex-1 max-w-3xl mx-4">
+      <input type="text" id="keywordInput" placeholder="Buscar por palavra-chave (ex: eletricista)" 
+        class="flex-grow rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      <input type="text" id="locationInput" placeholder="Cidade ou CEP (ex: Leme, SP)" 
+        class="w-40 rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
+      <button type="submit" class="bg-blue-600 text-white px-4 rounded-md hover:bg-blue-700 transition">Buscar</button>
+    </form>
 
-    <!-- Sidebar -->
-    <aside class="w-64 bg-white shadow-md p-6 text-[#0a1f44] flex flex-col">
-      <nav class="flex flex-col space-y-4 text-lg font-semibold">
-        <a href="#" class="hover:text-cyan-500">Dashboard</a>
-        <a href="#" class="hover:text-cyan-500">Meus Serviços</a>
-        <a href="#" class="hover:text-cyan-500">Meus Anúncios</a>
-        <a href="#" class="hover:text-cyan-500">Cursos</a>
-        <a href="#" class="hover:text-cyan-500">Ferramentas</a>
-        <a href="#" class="hover:text-cyan-500">Perfil</a>
-        <a href="#" class="hover:text-cyan-500">Configurações</a>
-      </nav>
-    </aside>
+    <div class="flex items-center gap-4">
+      <span id="userName" class="font-semibold text-gray-700">Olá, Usuário</span>
+      <img src="https://i.pravatar.cc/40" alt="Avatar" class="rounded-full w-10 h-10" />
+    </div>
+  </header>
+
+  <div class="flex flex-1 overflow-hidden">
+
+    <!-- Sidebar esquerda -->
+    <nav class="bg-white w-48 border-r border-gray-200 flex flex-col p-4 space-y-4">
+      <button data-category="all" class="category-btn bg-blue-100 text-blue-700 rounded-md py-2 font-semibold">Todos</button>
+      <button data-category="servicos" class="category-btn hover:bg-blue-100 rounded-md py-2 font-semibold">Serviços</button>
+      <button data-category="cursos" class="category-btn hover:bg-blue-100 rounded-md py-2 font-semibold">Cursos</button>
+      <button data-category="vagas" class="category-btn hover:bg-blue-100 rounded-md py-2 font-semibold">Vagas</button>
+    </nav>
 
     <!-- Conteúdo principal -->
-    <main class="flex-1 bg-gray-100 p-8 overflow-auto">
-      <h1 class="text-3xl font-bold mb-8 text-[#0a1f44]">Anúncios Disponíveis</h1>
-
-      <div id="adsContainer" class="space-y-8">
-        <!-- Anúncios aparecem aqui -->
+    <main class="flex-1 overflow-auto p-6 space-y-6">
+      <h2 class="text-2xl font-bold text-gray-800">Anúncios</h2>
+      <div id="adsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Anúncios aparecerão aqui -->
       </div>
     </main>
 
+    <!-- Sidebar direita - Perfil -->
+    <aside class="w-64 bg-white border-l border-gray-200 p-6 flex flex-col space-y-6">
+      <div class="flex flex-col items-center">
+        <img src="https://i.pravatar.cc/100" alt="Avatar" class="rounded-full w-24 h-24 mb-4" />
+        <h3 id="profileName" class="text-xl font-semibold">Usuário Exemplo</h3>
+        <p class="text-gray-600">user@example.com</p>
+      </div>
+
+      <div class="flex flex-col space-y-3">
+        <button class="bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">Anunciar Serviço</button>
+        <button class="bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition">Anunciar Currículo</button>
+        <button class="bg-purple-600 text-white py-2 rounded-md hover:bg-purple-700 transition">Anunciar Vaga</button>
+        <button class="bg-gray-400 text-gray-900 py-2 rounded-md hover:bg-gray-500 transition">Editar Perfil</button>
+      </div>
+    </aside>
   </div>
 
-  <script>
-    // Verifica se está logado (redireciona para login se não)
-    if (!localStorage.getItem('vinkorLoggedIn')) {
-      window.location.href = 'index.html';
-    }
+<script>
+  // Dados fake dos anúncios
+  const ads = [
+    {
+      id: 1,
+      categoria: 'servicos',
+      titulo: 'Eletricista profissional em Leme, SP',
+      descricao: 'Serviços elétricos residenciais e comerciais.',
+      local: 'Leme, SP',
+      online: false,
+    },
+    {
+      id: 2,
+      categoria: 'servicos',
+      titulo: 'Jardineiro experiente',
+      descricao: 'Manutenção de jardins, poda e limpeza.',
+      local: 'Piracicaba, SP',
+      online: false,
+    },
+    {
+      id: 3,
+      categoria: 'cursos',
+      titulo: 'Curso online de Marketing Digital',
+      descricao: 'Aprenda marketing digital do básico ao avançado.',
+      local: 'Online',
+      online: true,
+    },
+    {
+      id: 4,
+      categoria: 'cursos',
+      titulo: 'Curso presencial de Inglês em Campinas',
+      descricao: 'Aulas presenciais para todos os níveis.',
+      local: 'Campinas, SP',
+      online: false,
+    },
+    {
+      id: 5,
+      categoria: 'vagas',
+      titulo: 'Vaga para assistente administrativo em Leme, SP',
+      descricao: 'Empresa buscando assistente com experiência.',
+      local: 'Leme, SP',
+      online: false,
+    },
+    {
+      id: 6,
+      categoria: 'vagas',
+      titulo: 'Vaga remota para desenvolvedor frontend',
+      descricao: 'Trabalho home office com horário flexível.',
+      local: 'Online',
+      online: true,
+    },
+  ];
 
-    // Logout
-    document.getElementById('logoutBtn').addEventListener('click', () => {
-      localStorage.removeItem('vinkorLoggedIn');
-      window.location.href = 'index.html';
+  // Estado inicial
+  let selectedCategory = 'all';
+
+  const adsContainer = document.getElementById('adsContainer');
+  const categoryButtons = document.querySelectorAll('.category-btn');
+  const searchForm = document.getElementById('searchForm');
+  const keywordInput = document.getElementById('keywordInput');
+  const locationInput = document.getElementById('locationInput');
+
+  // Função para mostrar anúncios filtrados
+  function renderAds() {
+    const keyword = keywordInput.value.trim().toLowerCase();
+    const location = locationInput.value.trim().toLowerCase();
+
+    const filteredAds = ads.filter(ad => {
+      const matchCategory = selectedCategory === 'all' || ad.categoria === selectedCategory;
+      const matchKeyword = ad.titulo.toLowerCase().includes(keyword) || ad.descricao.toLowerCase().includes(keyword);
+      const matchLocation = ad.online || ad.local.toLowerCase().includes(location) || location === '';
+      return matchCategory && matchKeyword && matchLocation;
     });
 
-    // Lista de anúncios fictícios
-    const ads = [
-      { id: 1, titulo: "Curso de Excel Avançado", categoria: "Cursos", cidade: "Leme", estado: "SP", descricao: "Aprenda Excel para impulsionar sua carreira." },
-      { id: 2, titulo: "Vaga: Assistente Administrativo", categoria: "Vagas", cidade: "Leme", estado: "SP", descricao: "Empresa local busca assistente administrativo." },
-      { id: 3, titulo: "Serviço de Jardinagem", categoria: "Serviços", cidade: "Piracicaba", estado: "SP", descricao: "Profissional de jardinagem para residências." },
-      { id: 4, titulo: "Curso de Marketing Digital", categoria: "Cursos", cidade: "Campinas", estado: "SP", descricao: "Curso online com certificado." },
-      { id: 5, titulo: "Vaga: Eletricista", categoria: "Vagas", cidade: "Leme", estado: "SP", descricao: "Eletricista com experiência para obra." },
-      { id: 6, titulo: "Serviço de Limpeza", categoria: "Serviços", cidade: "Leme", estado: "SP", descricao: "Limpeza residencial e comercial." },
-      { id: 7, titulo: "Curso de Programação", categoria: "Cursos", cidade: "São Paulo", estado: "SP", descricao: "Curso presencial para iniciantes." },
-      { id: 8, titulo: "Vaga: Recepcionista", categoria: "Vagas", cidade: "Piracicaba", estado: "SP", descricao: "Recepcionista para empresa de saúde." }
-    ];
+    adsContainer.innerHTML = filteredAds.length
+      ? filteredAds.map(ad => `
+        <div class="bg-white rounded-lg shadow p-5 flex flex-col">
+          <h3 class="text-lg font-semibold text-blue-700 mb-2">${ad.titulo}</h3>
+          <p class="text-gray-700 flex-grow">${ad.descricao}</p>
+          <span class="text-sm text-gray-500 mt-4">${ad.online ? 'Online' : ad.local}</span>
+        </div>
+      `).join('')
+      : '<p class="col-span-full text-gray-500">Nenhum anúncio encontrado para os filtros selecionados.</p>';
+  }
 
-    const adsContainer = document.getElementById('adsContainer');
-    const locationInput = document.getElementById('locationInput');
-    const searchBtn = document.getElementById('searchBtn');
+  // Inicializar
+  renderAds();
 
-    function renderAds(filteredAds) {
-      if (filteredAds.length === 0) {
-        adsContainer.innerHTML = `<p class="text-gray-600">Nenhum anúncio encontrado para essa região.</p>`;
-        return;
-      }
+  // Lógica dos botões da barra lateral esquerda
+  categoryButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      selectedCategory = btn.dataset.category;
 
-      // Agrupa por categoria
-      const grouped = filteredAds.reduce((acc, ad) => {
-        if (!acc[ad.categoria]) acc[ad.categoria] = [];
-        acc[ad.categoria].push(ad);
-        return acc;
-      }, {});
-
-      adsContainer.innerHTML = "";
-
-      for (const categoria in grouped) {
-        const section = document.createElement('section');
-        section.className = "bg-white rounded-lg shadow p-6";
-
-        const h2 = document.createElement('h2');
-        h2.className = "font-semibold text-xl mb-4 text-[#0a1f44]";
-        h2.textContent = categoria;
-        section.appendChild(h2);
-
-        grouped[categoria].forEach(ad => {
-          const card = document.createElement('div');
-          card.className = "border border-gray-300 rounded p-4 mb-3 bg-gray-50";
-
-          const title = document.createElement('h3');
-          title.className = "font-semibold text-lg";
-          title.textContent = ad.titulo;
-
-          const desc = document.createElement('p');
-          desc.className = "text-gray-700";
-          desc.textContent = ad.descricao;
-
-          const location = document.createElement('p');
-          location.className = "text-sm text-gray-500 mt-1";
-          location.textContent = `${ad.cidade} - ${ad.estado}`;
-
-          card.appendChild(title);
-          card.appendChild(desc);
-          card.appendChild(location);
-
-          section.appendChild(card);
-        });
-
-        adsContainer.appendChild(section);
-      }
-    }
-
-    function normalizeString(str) {
-      return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
-    }
-
-    function filterAdsByLocation(input) {
-      const normalizedInput = normalizeString(input);
-
-      // Tenta pegar só cidade (antes da vírgula) ou usa tudo
-      const city = normalizedInput.split(",")[0].trim();
-
-      return ads.filter(ad => {
-        const adCity = normalizeString(ad.cidade);
-        const adState = normalizeString(ad.estado);
-
-        // Checa se input contém cidade ou estado (ex: "leme", "sp", "leme sp")
-        return adCity.includes(city) || adState.includes(city) || normalizedInput.includes(adCity) || normalizedInput.includes(adState);
+      // Atualiza estilos de botão
+      categoryButtons.forEach(b => {
+        b.classList.remove('bg-blue-100', 'text-blue-700');
+        b.classList.add('hover:bg-blue-100');
       });
-    }
+      btn.classList.add('bg-blue-100', 'text-blue-700');
+      btn.classList.remove('hover:bg-blue-100');
 
-    // Carrega inicialmente tudo
-    renderAds(ads);
-
-    // Busca ao clicar no botão
-    searchBtn.addEventListener('click', () => {
-      const input = locationInput.value;
-      if (!input.trim()) {
-        renderAds(ads);
-        return;
-      }
-      const filtered = filterAdsByLocation(input);
-      renderAds(filtered);
+      renderAds();
     });
+  });
 
-    // Busca ao apertar Enter no campo
-    locationInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter') {
-        searchBtn.click();
-      }
-    });
-
-    // Exemplo: coloca o nome do usuário se tiver salvo (pode ajustar conforme seu login)
-    const userName = localStorage.getItem('vinkorUserName') || "Usuário";
-    document.getElementById('userGreeting').textContent = `Olá, ${userName}`;
-  </script>
+  // Lógica do formulário de busca
+  searchForm.addEventListener('submit', e => {
+    e.preventDefault();
+    renderAds();
+  });
+</script>
 
 </body>
 </html>
