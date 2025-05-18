@@ -6,165 +6,47 @@
   <title>Vinkor Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100 flex h-screen overflow-hidden">
+<body class="flex min-h-screen bg-gray-100">
 
-  <!-- Barra lateral esquerda -->
-  <nav class="w-64 bg-white border-r flex flex-col">
-    <div class="p-6 border-b">
-      <h1 class="text-2xl font-bold text-blue-700">Vinkor</h1>
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white shadow-md flex flex-col">
+    <div class="px-6 py-4 border-b">
+      <h2 class="text-2xl font-bold text-blue-700 cursor-pointer" onclick="location.href='dashboard.html'">Vinkor</h2>
     </div>
-    <ul class="flex-grow p-6 space-y-4 text-gray-700">
-      <li>
-        <button class="w-full text-left hover:text-blue-600 font-semibold">Serviços</button>
-      </li>
-      <li>
-        <button class="w-full text-left hover:text-blue-600 font-semibold">Cursos</button>
-      </li>
-      <li>
-        <button class="w-full text-left hover:text-blue-600 font-semibold">Vagas</button>
-      </li>
-      <li>
-        <button class="w-full text-left hover:text-blue-600 font-semibold">Motoristas</button>
-      </li>
-      <li>
-        <button class="w-full text-left hover:text-blue-600 font-semibold">Motoboys</button>
-      </li>
-    </ul>
-  </nav>
-
-  <!-- Conteúdo central -->
-  <main class="flex-grow p-6 overflow-y-auto">
-    <!-- Barra de pesquisa com CEP/cidade -->
-    <div class="mb-6 flex flex-col sm:flex-row sm:items-center gap-3">
-      <input
-        type="text"
-        placeholder="Digite sua cidade ou CEP"
-        class="flex-grow px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
-        id="locationInput"
-      />
-      <input
-        type="text"
-        placeholder="Buscar serviços, cursos, vagas..."
-        class="flex-grow px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
-        id="searchInput"
-      />
+    <nav class="flex-grow p-4 space-y-4 text-gray-700">
+      <button class="w-full text-left px-3 py-2 rounded hover:bg-blue-100" onclick="alert('Serviços')">Serviços</button>
+      <button class="w-full text-left px-3 py-2 rounded hover:bg-blue-100" onclick="alert('Cursos')">Cursos</button>
+      <button class="w-full text-left px-3 py-2 rounded hover:bg-blue-100" onclick="alert('Vagas')">Vagas</button>
+      <button class="w-full text-left px-3 py-2 rounded hover:bg-blue-100" onclick="alert('Motoristas')">Motoristas</button>
+      <button class="w-full text-left px-3 py-2 rounded hover:bg-blue-100" onclick="alert('Motoboys')">Motoboys</button>
       <button
-        onclick="filterAnnouncements()"
-        class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
+        class="w-full text-left px-3 py-2 rounded hover:bg-blue-100 font-semibold text-blue-700"
+        onclick="location.href='marketplace.html'"
       >
-        Buscar
+        Marketplace
       </button>
-    </div>
-
-    <!-- Anúncios fakes -->
-    <section id="announcements" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <!-- Exemplo de anúncio -->
-      <article class="bg-white p-4 rounded-md shadow hover:shadow-lg transition">
-        <h3 class="font-bold text-lg mb-2">Curso de Jardinagem Básica</h3>
-        <p class="text-gray-700 mb-1">Local: Leme, SP</p>
-        <p class="text-gray-600 text-sm mb-2">Aprenda técnicas práticas para cuidar do seu jardim.</p>
-        <p class="text-blue-600 font-semibold">Gratuito</p>
-      </article>
-
-      <article class="bg-white p-4 rounded-md shadow hover:shadow-lg transition">
-        <h3 class="font-bold text-lg mb-2">Eletricista disponível</h3>
-        <p class="text-gray-700 mb-1">Local: Leme, SP</p>
-        <p class="text-gray-600 text-sm mb-2">Serviço rápido e com garantia. Orçamento sem compromisso.</p>
-        <p class="text-blue-600 font-semibold">R$ 80/hora</p>
-      </article>
-
-      <article class="bg-white p-4 rounded-md shadow hover:shadow-lg transition">
-        <h3 class="font-bold text-lg mb-2">Vaga de Atendente</h3>
-        <p class="text-gray-700 mb-1">Local: Leme, SP</p>
-        <p class="text-gray-600 text-sm mb-2">Empresa local busca atendente com experiência.</p>
-        <p class="text-blue-600 font-semibold">Salário: R$ 1.500/mês</p>
-      </article>
-
-      <article class="bg-white p-4 rounded-md shadow hover:shadow-lg transition">
-        <h3 class="font-bold text-lg mb-2">Motorista disponível - Rafael</h3>
-        <p class="text-gray-700 mb-1">Local: Leme, SP</p>
-        <p class="text-gray-600 text-sm mb-2">Atua com transporte de passageiros. Entre em contato para negociar valor.</p>
-        <p class="text-blue-600 font-semibold">Aceita solicitações</p>
-      </article>
-
-      <article class="bg-white p-4 rounded-md shadow hover:shadow-lg transition">
-        <h3 class="font-bold text-lg mb-2">Motoboy disponível - Carla</h3>
-        <p class="text-gray-700 mb-1">Local: Leme, SP</p>
-        <p class="text-gray-600 text-sm mb-2">Faz entregas rápidas e seguras na região.</p>
-        <p class="text-blue-600 font-semibold">Aceita solicitações</p>
-      </article>
-    </section>
-  </main>
-
-  <!-- Perfil lateral direita -->
-  <aside
-    class="w-72 bg-white border-l p-6 overflow-y-auto relative hidden sm:flex flex-col"
-  >
-    <div
-      id="profileHeader"
-      class="cursor-pointer flex flex-col items-center select-none"
-      onclick="toggleProfileMenu()"
-    >
-      <img
-        src="https://via.placeholder.com/100"
-        alt="Foto do usuário"
-        class="rounded-full mb-2"
-      />
-      <p id="userName" class="font-bold text-lg">João Silva ▼</p>
-    </div>
-
-    <div
-      id="profileMenu"
-      class="mt-4 space-y-3 hidden"
-    >
-      <button
-        class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
-      >
-        Anunciar Serviço
-      </button>
-      <button
-        class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
-      >
-        Anunciar Currículo
-      </button>
-      <button
-        class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
-      >
-        Editar Perfil
-      </button>
+    </nav>
+    <div class="px-6 py-4 border-t text-gray-600">
+      <details>
+        <summary class="cursor-pointer">Usuário Exemplo ▼</summary>
+        <div class="mt-2 space-y-2 text-sm">
+          <button class="w-full text-left hover:underline" onclick="alert('Meu Perfil')">Meu Perfil</button>
+          <button class="w-full text-left hover:underline" onclick="alert('Anunciar')">Anunciar</button>
+          <button class="w-full text-left hover:underline" onclick="alert('Currículo')">Currículo</button>
+          <button class="w-full text-left hover:underline" onclick="alert('Sair')">Sair</button>
+        </div>
+      </details>
     </div>
   </aside>
 
-  <script>
-    function toggleProfileMenu() {
-      const menu = document.getElementById('profileMenu');
-      menu.classList.toggle('hidden');
-      const userName = document.getElementById('userName');
-      if (menu.classList.contains('hidden')) {
-        userName.textContent = 'João Silva ▼';
-      } else {
-        userName.textContent = 'João Silva ▲';
-      }
-    }
+  <!-- Conteúdo principal -->
+  <main class="flex-grow p-6">
+    <h1 class="text-3xl font-bold mb-6">Bem-vindo ao seu Dashboard</h1>
 
-    function filterAnnouncements() {
-      const location = document.getElementById('locationInput').value.toLowerCase();
-      const search = document.getElementById('searchInput').value.toLowerCase();
-      const announcements = document.querySelectorAll('#announcements article');
+    <p>Aqui você verá os anúncios e oportunidades da sua região.</p>
 
-      announcements.forEach(art => {
-        const text = art.textContent.toLowerCase();
-        // Mostra só se contém cidade/cep + termo buscado (ou só um deles se o outro for vazio)
-        const matchLocation = location ? text.includes(location) : true;
-        const matchSearch = search ? text.includes(search) : true;
+    <!-- Aqui você pode adicionar o conteúdo principal do dashboard -->
+  </main>
 
-        if (matchLocation && matchSearch) {
-          art.style.display = '';
-        } else {
-          art.style.display = 'none';
-        }
-      });
-    }
-  </script>
 </body>
 </html>
