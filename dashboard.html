@@ -1,223 +1,170 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="h-full bg-gray-100">
+<html lang="pt-BR" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dashboard Vinkor</title>
+  <title>Vinkor Dashboard</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="h-full flex flex-col">
-  <!-- Navbar -->
-  <header class="bg-white shadow flex items-center justify-between px-6 py-4">
-    <div class="flex items-center space-x-4">
-      <img src="/VINKOR.png" alt="Vinkor Logo" class="w-14" />
-      <h1 class="text-2xl font-bold text-blue-700">VINKOR</h1>
+<body class="bg-gray-100 flex h-screen overflow-hidden">
+
+  <!-- Barra lateral esquerda -->
+  <nav class="w-64 bg-white border-r flex flex-col">
+    <div class="p-6 border-b">
+      <h1 class="text-2xl font-bold text-blue-700">Vinkor</h1>
     </div>
-    <div class="flex items-center space-x-4">
+    <ul class="flex-grow p-6 space-y-4 text-gray-700">
+      <li>
+        <button class="w-full text-left hover:text-blue-600 font-semibold">Serviços</button>
+      </li>
+      <li>
+        <button class="w-full text-left hover:text-blue-600 font-semibold">Cursos</button>
+      </li>
+      <li>
+        <button class="w-full text-left hover:text-blue-600 font-semibold">Vagas</button>
+      </li>
+      <li>
+        <button class="w-full text-left hover:text-blue-600 font-semibold">Motoristas</button>
+      </li>
+      <li>
+        <button class="w-full text-left hover:text-blue-600 font-semibold">Motoboys</button>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Conteúdo central -->
+  <main class="flex-grow p-6 overflow-y-auto">
+    <!-- Barra de pesquisa com CEP/cidade -->
+    <div class="mb-6 flex flex-col sm:flex-row sm:items-center gap-3">
       <input
         type="text"
-        placeholder="Digite cidade ou CEP"
+        placeholder="Digite sua cidade ou CEP"
+        class="flex-grow px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
         id="locationInput"
-        class="border rounded px-3 py-1 w-48"
       />
       <input
         type="text"
-        placeholder="Pesquisar serviços"
+        placeholder="Buscar serviços, cursos, vagas..."
+        class="flex-grow px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-600"
         id="searchInput"
-        class="border rounded px-3 py-1 w-48"
       />
       <button
-        id="searchBtn"
-        class="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700 transition"
+        onclick="filterAnnouncements()"
+        class="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition"
       >
         Buscar
       </button>
-      <button id="logoutBtn" class="text-blue-600 hover:underline">Sair</button>
     </div>
-  </header>
 
-  <div class="flex flex-1 overflow-hidden">
-    <!-- Sidebar esquerda -->
-    <nav class="w-64 bg-white border-r overflow-y-auto">
-      <ul class="space-y-2 p-4">
-        <li>
-          <button
-            class="w-full text-left px-3 py-2 rounded hover:bg-blue-100"
-            onclick="showCategory('servicos')"
-          >
-            Serviços
-          </button>
-        </li>
-        <li>
-          <button
-            class="w-full text-left px-3 py-2 rounded hover:bg-blue-100"
-            onclick="showCategory('cursos')"
-          >
-            Cursos
-          </button>
-        </li>
-        <li>
-          <button
-            class="w-full text-left px-3 py-2 rounded hover:bg-blue-100"
-            onclick="showCategory('vagas')"
-          >
-            Vagas
-          </button>
-        </li>
-        <li>
-          <button
-            class="w-full text-left px-3 py-2 rounded hover:bg-blue-100"
-            onclick="showCategory('motoristas')"
-          >
-            Motoristas
-          </button>
-        </li>
-        <li>
-          <button
-            class="w-full text-left px-3 py-2 rounded hover:bg-blue-100"
-            onclick="showCategory('motoboys')"
-          >
-            Motoboys
-          </button>
-        </li>
-      </ul>
-    </nav>
+    <!-- Anúncios fakes -->
+    <section id="announcements" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Exemplo de anúncio -->
+      <article class="bg-white p-4 rounded-md shadow hover:shadow-lg transition">
+        <h3 class="font-bold text-lg mb-2">Curso de Jardinagem Básica</h3>
+        <p class="text-gray-700 mb-1">Local: Leme, SP</p>
+        <p class="text-gray-600 text-sm mb-2">Aprenda técnicas práticas para cuidar do seu jardim.</p>
+        <p class="text-blue-600 font-semibold">Gratuito</p>
+      </article>
 
-    <!-- Conteúdo principal central -->
-    <main class="flex-1 overflow-y-auto p-6 bg-gray-50">
-      <!-- Serviços -->
-      <section id="servicos" class="category-section hidden">
-        <h2 class="text-2xl font-semibold mb-4">Serviços Disponíveis</h2>
-        <p>Exemplo de lista de serviços aqui...</p>
-      </section>
+      <article class="bg-white p-4 rounded-md shadow hover:shadow-lg transition">
+        <h3 class="font-bold text-lg mb-2">Eletricista disponível</h3>
+        <p class="text-gray-700 mb-1">Local: Leme, SP</p>
+        <p class="text-gray-600 text-sm mb-2">Serviço rápido e com garantia. Orçamento sem compromisso.</p>
+        <p class="text-blue-600 font-semibold">R$ 80/hora</p>
+      </article>
 
-      <!-- Cursos -->
-      <section id="cursos" class="category-section hidden">
-        <h2 class="text-2xl font-semibold mb-4">Cursos Disponíveis</h2>
-        <p>Exemplo de lista de cursos aqui...</p>
-      </section>
+      <article class="bg-white p-4 rounded-md shadow hover:shadow-lg transition">
+        <h3 class="font-bold text-lg mb-2">Vaga de Atendente</h3>
+        <p class="text-gray-700 mb-1">Local: Leme, SP</p>
+        <p class="text-gray-600 text-sm mb-2">Empresa local busca atendente com experiência.</p>
+        <p class="text-blue-600 font-semibold">Salário: R$ 1.500/mês</p>
+      </article>
 
-      <!-- Vagas -->
-      <section id="vagas" class="category-section hidden">
-        <h2 class="text-2xl font-semibold mb-4">Vagas de Emprego</h2>
-        <p>Exemplo de lista de vagas aqui...</p>
-      </section>
+      <article class="bg-white p-4 rounded-md shadow hover:shadow-lg transition">
+        <h3 class="font-bold text-lg mb-2">Motorista disponível - Rafael</h3>
+        <p class="text-gray-700 mb-1">Local: Leme, SP</p>
+        <p class="text-gray-600 text-sm mb-2">Atua com transporte de passageiros. Entre em contato para negociar valor.</p>
+        <p class="text-blue-600 font-semibold">Aceita solicitações</p>
+      </article>
 
-      <!-- Motoristas -->
-      <section id="motoristas" class="category-section hidden">
-        <h2 class="text-2xl font-semibold mb-6">Motoristas Disponíveis</h2>
-        <div class="space-y-4">
-          <div class="bg-white p-4 rounded shadow flex justify-between items-center">
-            <div>
-              <p class="font-bold text-lg">Rafael</p>
-              <p class="text-green-600 font-semibold">Disponível</p>
-            </div>
-            <button
-              class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-              onclick="solicitarServico('Rafael')"
-            >
-              Solicitar
-            </button>
-          </div>
-          <div class="bg-white p-4 rounded shadow flex justify-between items-center">
-            <div>
-              <p class="font-bold text-lg">Carla</p>
-              <p class="text-green-600 font-semibold">Disponível</p>
-            </div>
-            <button
-              class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-              onclick="solicitarServico('Carla')"
-            >
-              Solicitar
-            </button>
-          </div>
-        </div>
-      </section>
+      <article class="bg-white p-4 rounded-md shadow hover:shadow-lg transition">
+        <h3 class="font-bold text-lg mb-2">Motoboy disponível - Carla</h3>
+        <p class="text-gray-700 mb-1">Local: Leme, SP</p>
+        <p class="text-gray-600 text-sm mb-2">Faz entregas rápidas e seguras na região.</p>
+        <p class="text-blue-600 font-semibold">Aceita solicitações</p>
+      </article>
+    </section>
+  </main>
 
-      <!-- Motoboys -->
-      <section id="motoboys" class="category-section hidden">
-        <h2 class="text-2xl font-semibold mb-6">Motoboys Disponíveis</h2>
-        <div class="space-y-4">
-          <div class="bg-white p-4 rounded shadow flex justify-between items-center">
-            <div>
-              <p class="font-bold text-lg">João</p>
-              <p class="text-green-600 font-semibold">Disponível</p>
-            </div>
-            <button
-              class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-              onclick="solicitarServico('João')"
-            >
-              Solicitar
-            </button>
-          </div>
-          <div class="bg-white p-4 rounded shadow flex justify-between items-center">
-            <div>
-              <p class="font-bold text-lg">Maria</p>
-              <p class="text-green-600 font-semibold">Disponível</p>
-            </div>
-            <button
-              class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
-              onclick="solicitarServico('Maria')"
-            >
-              Solicitar
-            </button>
-          </div>
-        </div>
-      </section>
-    </main>
+  <!-- Perfil lateral direita -->
+  <aside
+    class="w-72 bg-white border-l p-6 overflow-y-auto relative hidden sm:flex flex-col"
+  >
+    <div
+      id="profileHeader"
+      class="cursor-pointer flex flex-col items-center select-none"
+      onclick="toggleProfileMenu()"
+    >
+      <img
+        src="https://via.placeholder.com/100"
+        alt="Foto do usuário"
+        class="rounded-full mb-2"
+      />
+      <p id="userName" class="font-bold text-lg">João Silva ▼</p>
+    </div>
 
-    <!-- Perfil lateral direita -->
-    <aside class="w-80 bg-white border-l p-6 overflow-y-auto">
-      <h2 class="text-xl font-semibold mb-4">Perfil do Usuário</h2>
-      <div class="mb-6">
-        <img
-          src="https://via.placeholder.com/100"
-          alt="Foto do usuário"
-          class="rounded-full mx-auto mb-4"
-        />
-        <p class="text-center font-bold">João Silva</p>
-        <p class="text-center text-gray-500 text-sm">joao@email.com</p>
-      </div>
-      <div class="space-y-3">
-        <button class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">
-          Anunciar Serviço
-        </button>
-        <button class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">
-          Anunciar Currículo
-        </button>
-        <button class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">
-          Editar Perfil
-        </button>
-      </div>
-    </aside>
-  </div>
+    <div
+      id="profileMenu"
+      class="mt-4 space-y-3 hidden"
+    >
+      <button
+        class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+      >
+        Anunciar Serviço
+      </button>
+      <button
+        class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+      >
+        Anunciar Currículo
+      </button>
+      <button
+        class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition"
+      >
+        Editar Perfil
+      </button>
+    </div>
+  </aside>
 
   <script>
-    function showCategory(category) {
-      document.querySelectorAll('.category-section').forEach((section) => {
-        section.classList.add('hidden');
+    function toggleProfileMenu() {
+      const menu = document.getElementById('profileMenu');
+      menu.classList.toggle('hidden');
+      const userName = document.getElementById('userName');
+      if (menu.classList.contains('hidden')) {
+        userName.textContent = 'João Silva ▼';
+      } else {
+        userName.textContent = 'João Silva ▲';
+      }
+    }
+
+    function filterAnnouncements() {
+      const location = document.getElementById('locationInput').value.toLowerCase();
+      const search = document.getElementById('searchInput').value.toLowerCase();
+      const announcements = document.querySelectorAll('#announcements article');
+
+      announcements.forEach(art => {
+        const text = art.textContent.toLowerCase();
+        // Mostra só se contém cidade/cep + termo buscado (ou só um deles se o outro for vazio)
+        const matchLocation = location ? text.includes(location) : true;
+        const matchSearch = search ? text.includes(search) : true;
+
+        if (matchLocation && matchSearch) {
+          art.style.display = '';
+        } else {
+          art.style.display = 'none';
+        }
       });
-      const selectedSection = document.getElementById(category);
-      if (selectedSection) selectedSection.classList.remove('hidden');
     }
-
-    // Mostrar 'Serviços' por padrão
-    showCategory('servicos');
-
-    function solicitarServico(nome) {
-      alert(`Pedido enviado para o ${nome}. Aguarde o contato para combinar o valor.`);
-    }
-
-    document.getElementById('logoutBtn').addEventListener('click', () => {
-      alert('Logout realizado (simulado).');
-      // Aqui você pode redirecionar para página de login, por exemplo
-    });
-
-    document.getElementById('searchBtn').addEventListener('click', () => {
-      const location = document.getElementById('locationInput').value.trim();
-      const search = document.getElementById('searchInput').value.trim();
-      alert(`Buscando por "${search}" na região "${location}" (simulado).`);
-    });
   </script>
 </body>
 </html>
