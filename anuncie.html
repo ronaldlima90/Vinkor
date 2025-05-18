@@ -2,75 +2,115 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Vinkor - Anuncie ou Busque</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #f4f6f9;
-      color: #333;
-    }
-    header {
-      background: #0a1f44;
-      color: white;
-      padding: 2rem;
-      text-align: center;
-    }
-    header h1 {
-      margin: 0;
-    }
-    main {
-      padding: 2rem;
-      max-width: 800px;
-      margin: auto;
-    }
-    .section {
-      background: white;
-      padding: 2rem;
-      margin-bottom: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    }
-    .section h2 {
-      margin-top: 0;
-    }
-    .btn {
-      display: inline-block;
-      margin-top: 1rem;
-      background: #005eff;
-      color: white;
-      padding: 0.75rem 1.5rem;
-      text-decoration: none;
-      border-radius: 6px;
-      transition: background 0.3s ease;
-    }
-    .btn:hover {
-      background: #0040c1;
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vinkor - Conectando tudo</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <header>
-    <h1>VINKOR</h1>
-    <p>Conectando pessoas e oportunidades</p>
+<body class="pt-16 bg-gradient-to-r from-[#0a1f44] to-[#005eff] text-white min-h-screen flex flex-col">
+
+  <!-- NAVBAR FIXA -->
+  <nav class="fixed top-0 left-0 right-0 bg-[#0a1f44] bg-opacity-90 backdrop-blur-sm z-50 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+
+        <!-- Logo -->
+        <div class="flex-shrink-0">
+          <a href="#">
+            <img class="h-10 w-auto" src="/VINKOR.png" alt="Vinkor Logo" />
+          </a>
+        </div>
+
+        <!-- Menu Links -->
+        <div class="hidden md:flex space-x-8">
+          <a href="#features" class="text-white hover:text-cyan-400 font-semibold">Funcionalidades</a>
+          <a href="#about" class="text-white hover:text-cyan-400 font-semibold">Sobre</a>
+          <a href="#contact" class="text-white hover:text-cyan-400 font-semibold">Contato</a>
+        </div>
+
+        <!-- Pesquisa + Login -->
+        <div class="flex items-center space-x-4">
+          <!-- Campo de Pesquisa -->
+          <div>
+            <input
+              type="text"
+              placeholder="Pesquisar..."
+              class="px-3 py-1 rounded-md text-[#0a1f44] focus:outline-none focus:ring-2 focus:ring-cyan-400"
+            />
+          </div>
+          <!-- Botão Login -->
+          <a
+            href="#login"
+            class="bg-cyan-400 text-[#0a1f44] font-semibold px-4 py-2 rounded-md hover:bg-cyan-500 transition"
+            >Login</a
+          >
+        </div>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header class="text-center py-12 px-4">
+    <img src="/VINKOR.png" alt="Vinkor Logo" class="w-32 mx-auto mb-4" />
+    <h1 class="text-4xl font-bold mb-2">VINKOR</h1>
+    <p class="text-xl">Conectando pessoas e oportunidades</p>
   </header>
-  <main>
-    <div class="section">
-      <h2>📢 Anunciar um Serviço ou Currículo</h2>
-      <p>Cadastre-se e divulgue suas habilidades, serviços ou currículo. Alcance quem procura por você!</p>
-      <a class="btn" href="#">Anunciar Agora</a>
+
+  <!-- FEATURES -->
+  <section id="features" class="bg-gray-100 text-[#0a1f44] py-16 px-6 grid gap-8 md:grid-cols-3 text-center">
+    <div class="bg-white rounded-xl shadow-md p-6">
+      <h2 class="text-xl font-bold mb-2">Conexões Inteligentes</h2>
+      <p>Conecte serviços, profissionais e recursos de forma integrada e inteligente.</p>
     </div>
-    <div class="section">
-      <h2>🔍 Buscar Profissionais e Serviços</h2>
-      <p>Precisa de um jardineiro, eletricista, professor ou outro profissional? Encontre facilmente!</p>
-      <a class="btn" href="#">Buscar Agora</a>
+    <div class="bg-white rounded-xl shadow-md p-6">
+      <h2 class="text-xl font-bold mb-2">Soluções em Um Só Lugar</h2>
+      <p>Centralize tudo o que você precisa em uma plataforma simples e moderna.</p>
     </div>
-    <div class="section">
-      <h2>🎓 Descubra Cursos e Formações</h2>
-      <p>Amplie seus conhecimentos com cursos disponíveis diretamente na plataforma.</p>
-      <a class="btn" href="#">Ver Cursos</a>
+    <div class="bg-white rounded-xl shadow-md p-6">
+      <h2 class="text-xl font-bold mb-2">Experiência Intuitiva</h2>
+      <p>Design pensado para facilitar sua vida e agilizar suas interações digitais.</p>
     </div>
-  </main>
+  </section>
+
+  <!-- OFFERINGS -->
+  <section id="offerings" class="bg-white text-[#0a1f44] text-center py-16 px-6">
+    <h2 class="text-3xl font-bold mb-6">O que você pode fazer na Vinkor</h2>
+    <div class="space-y-4 text-lg">
+      <p>🔍 Buscar e contratar profissionais e serviços (jardinagem, elétrica, etc.)</p>
+      <p>📢 Anunciar seu currículo ou seus serviços</p>
+      <p>🎓 Participar de cursos e formações dentro da plataforma</p>
+      <p>🧰 Acessar ferramentas que facilitam seu dia a dia profissional</p>
+      <p>🌐 Criar conexões com oportunidades no Brasil e no mundo</p>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="bg-gray-100 text-[#0a1f44] text-center py-16 px-6">
+    <h2 class="text-3xl font-bold mb-4">Sobre a Vinkor</h2>
+    <p class="max-w-2xl mx-auto text-lg">
+      Somos uma plataforma criada para conectar tudo e todos em um só lugar. Nossa missão é simplificar a experiência digital por meio da inovação e da integração inteligente.
+    </p>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="bg-white text-[#0a1f44] text-center py-16 px-6">
+    <h2 class="text-3xl font-bold mb-4">Fale Conosco</h2>
+    <p class="text-lg">Tem dúvidas ou sugestões? Entre em contato conosco pelo email:</p>
+    <p class="mt-2 font-semibold text-blue-600">contato@vinkor.com</p>
+  </section>
+
+  <!-- LOGIN -->
+  <section id="login" class="bg-gray-100 text-[#0a1f44] text-center py-16 px-6">
+    <h2 class="text-3xl font-bold mb-4">Acesse sua conta</h2>
+    <a href="#" class="inline-block bg-[#005eff] text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-700 transition"
+      >Entrar</a
+    >
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="bg-[#0a1f44] text-white text-center py-4 mt-auto">
+    <p>&copy; 2025 Vinkor. Todos os direitos reservados.</p>
+  </footer>
+
 </body>
 </html>
