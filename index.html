@@ -4,152 +4,70 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Vinkor - Conectando tudo</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #0a1f44, #005eff);
-      color: white;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    header {
-      padding: 2rem;
-      text-align: center;
-    }
-    header h1 {
-      font-size: 3rem;
-      margin: 0.5rem 0;
-    }
-    header p {
-      font-size: 1.5rem;
-      margin: 0.5rem 0;
-    }
-    .cta {
-      margin-top: 2rem;
-    }
-    .cta a {
-      padding: 1rem 2rem;
-      background: #00d1c1;
-      color: #0a1f44;
-      font-weight: bold;
-      text-decoration: none;
-      border-radius: 8px;
-      transition: background 0.3s ease;
-    }
-    .cta a:hover {
-      background: #00b2a7;
-    }
-    .features {
-      background: #f8f9fa;
-      color: #0a1f44;
-      padding: 4rem 2rem;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 2rem;
-      text-align: center;
-    }
-    .feature {
-      background: white;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-    .offerings {
-      padding: 4rem 2rem;
-      background: #ffffff;
-      color: #0a1f44;
-      text-align: center;
-    }
-    .offerings h2 {
-      font-size: 2rem;
-      margin-bottom: 2rem;
-    }
-    .offering-item {
-      margin-bottom: 1.5rem;
-      font-size: 1.2rem;
-    }
-    .about, .contact, .login {
-      padding: 4rem 2rem;
-      background: #ffffff;
-      color: #0a1f44;
-      text-align: center;
-    }
-    .about h2, .contact h2, .login h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-    .login a {
-      padding: 0.75rem 1.5rem;
-      background: #005eff;
-      color: white;
-      text-decoration: none;
-      border-radius: 6px;
-      display: inline-block;
-      margin-top: 1rem;
-    }
-    footer {
-      text-align: center;
-      padding: 1rem;
-      background: #0a1f44;
-      margin-top: auto;
-    }
-    .logo {
-      width: 140px;
-      margin-bottom: 1rem;
-    }
-  </style>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<header>
-  <img src="/VINKOR.png" alt="Vinkor Logo" style="width: 120px; margin-bottom: 1rem;">
-  <h1>VINKOR</h1>
-  <p>Conectando pessoas e oportunidades</p>
-</header>
+<body class="bg-gradient-to-r from-[#0a1f44] to-[#005eff] text-white min-h-screen flex flex-col">
 
+  <!-- HEADER -->
+  <header class="text-center py-12 px-4">
+    <img src="/VINKOR.png" alt="Vinkor Logo" class="w-32 mx-auto mb-4">
+    <h1 class="text-4xl font-bold mb-2">VINKOR</h1>
+    <p class="text-xl">Conectando pessoas e oportunidades</p>
+  </header>
 
-  <section class="features">
-    <div class="feature">
-      <h2>Conexões Inteligentes</h2>
+  <!-- FEATURES -->
+  <section id="features" class="bg-gray-100 text-[#0a1f44] py-16 px-6 grid gap-8 md:grid-cols-3 text-center">
+    <div class="bg-white rounded-xl shadow-md p-6">
+      <h2 class="text-xl font-bold mb-2">Conexões Inteligentes</h2>
       <p>Conecte serviços, profissionais e recursos de forma integrada e inteligente.</p>
     </div>
-    <div class="feature">
-      <h2>Soluções em Um Só Lugar</h2>
+    <div class="bg-white rounded-xl shadow-md p-6">
+      <h2 class="text-xl font-bold mb-2">Soluções em Um Só Lugar</h2>
       <p>Centralize tudo o que você precisa em uma plataforma simples e moderna.</p>
     </div>
-    <div class="feature">
-      <h2>Experiência Intuitiva</h2>
+    <div class="bg-white rounded-xl shadow-md p-6">
+      <h2 class="text-xl font-bold mb-2">Experiência Intuitiva</h2>
       <p>Design pensado para facilitar sua vida e agilizar suas interações digitais.</p>
     </div>
   </section>
 
-  <section class="offerings">
-    <h2>O que você pode fazer na Vinkor</h2>
-    <div class="offering-item">🔍 Buscar e contratar profissionais e serviços (jardinagem, elétrica, etc.)</div>
-    <div class="offering-item">📢 Anunciar seu currículo ou seus serviços</div>
-    <div class="offering-item">🎓 Participar de cursos e formações dentro da plataforma</div>
-    <div class="offering-item">🧰 Acessar ferramentas que facilitam seu dia a dia profissional</div>
-    <div class="offering-item">🌐 Criar conexões com oportunidades no Brasil e no mundo</div>
+  <!-- OFFERINGS -->
+  <section id="offerings" class="bg-white text-[#0a1f44] text-center py-16 px-6">
+    <h2 class="text-3xl font-bold mb-6">O que você pode fazer na Vinkor</h2>
+    <div class="space-y-4 text-lg">
+      <p>🔍 Buscar e contratar profissionais e serviços (jardinagem, elétrica, etc.)</p>
+      <p>📢 Anunciar seu currículo ou seus serviços</p>
+      <p>🎓 Participar de cursos e formações dentro da plataforma</p>
+      <p>🧰 Acessar ferramentas que facilitam seu dia a dia profissional</p>
+      <p>🌐 Criar conexões com oportunidades no Brasil e no mundo</p>
+    </div>
   </section>
 
-  <section class="about">
-    <h2>Sobre a Vinkor</h2>
-    <p>Somos uma plataforma criada para conectar tudo e todos em um só lugar. Nossa missão é simplificar a experiência digital por meio da inovação e da integração inteligente.</p>
+  <!-- ABOUT -->
+  <section id="about" class="bg-gray-100 text-[#0a1f44] text-center py-16 px-6">
+    <h2 class="text-3xl font-bold mb-4">Sobre a Vinkor</h2>
+    <p class="max-w-2xl mx-auto text-lg">
+      Somos uma plataforma criada para conectar tudo e todos em um só lugar. Nossa missão é simplificar a experiência digital por meio da inovação e da integração inteligente.
+    </p>
   </section>
 
-  <section class="contact">
-    <h2>Fale Conosco</h2>
-    <p>Tem dúvidas ou sugestões? Entre em contato conosco pelo email: contato@vinkor.com</p>
+  <!-- CONTACT -->
+  <section id="contact" class="bg-white text-[#0a1f44] text-center py-16 px-6">
+    <h2 class="text-3xl font-bold mb-4">Fale Conosco</h2>
+    <p class="text-lg">Tem dúvidas ou sugestões? Entre em contato conosco pelo email:</p>
+    <p class="mt-2 font-semibold text-blue-600">contato@vinkor.com</p>
   </section>
 
-  <section class="login">
-    <h2>Acesse sua conta</h2>
-    <a href="#">Entrar</a>
+  <!-- LOGIN -->
+  <section id="login" class="bg-gray-100 text-[#0a1f44] text-center py-16 px-6">
+    <h2 class="text-3xl font-bold mb-4">Acesse sua conta</h2>
+    <a href="#" class="inline-block bg-[#005eff] text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-700 transition">Entrar</a>
   </section>
 
-  <footer>
+  <!-- FOOTER -->
+  <footer class="bg-[#0a1f44] text-white text-center py-4 mt-auto">
     <p>&copy; 2025 Vinkor. Todos os direitos reservados.</p>
   </footer>
+
 </body>
 </html>
