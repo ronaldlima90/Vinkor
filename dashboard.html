@@ -1,180 +1,206 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="scroll-smooth">
+<html lang="pt-BR" class="h-full bg-gray-100">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dashboard Vinkor</title>
+  <title>Dashboard Vinkor - Motoristas e Motoboys</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-50 min-h-screen flex flex-col">
-
-  <!-- Top bar -->
-  <header class="bg-white shadow p-4 flex items-center justify-between sticky top-0 z-30">
-    <div class="flex items-center gap-4">
-      <img src="/VINKOR.png" alt="Vinkor Logo" class="w-12" />
-      <h1 class="text-xl font-bold text-blue-700">Vinkor</h1>
+<body class="h-full flex flex-col">
+  <!-- Navbar -->
+  <header class="bg-white shadow flex items-center justify-between px-6 py-4">
+    <div class="flex items-center space-x-4">
+      <img src="/VINKOR.png" alt="Vinkor Logo" class="w-14" />
+      <h1 class="text-2xl font-bold text-blue-700">VINKOR</h1>
     </div>
-
-    <form id="searchForm" class="flex gap-2 flex-1 max-w-3xl mx-4">
-      <input type="text" id="keywordInput" placeholder="Buscar por palavra-chave (ex: eletricista)" 
-        class="flex-grow rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-      <input type="text" id="locationInput" placeholder="Cidade ou CEP (ex: Leme, SP)" 
-        class="w-40 rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" />
-      <button type="submit" class="bg-blue-600 text-white px-4 rounded-md hover:bg-blue-700 transition">Buscar</button>
-    </form>
-
-    <div class="flex items-center gap-4">
-      <span id="userName" class="font-semibold text-gray-700">Olá, Usuário</span>
-      <img src="https://i.pravatar.cc/40" alt="Avatar" class="rounded-full w-10 h-10" />
+    <div class="flex items-center space-x-4">
+      <input
+        type="text"
+        placeholder="Digite cidade ou CEP"
+        id="locationInput"
+        class="border rounded px-3 py-1 w-48"
+      />
+      <input
+        type="text"
+        placeholder="Pesquisar serviços"
+        id="searchInput"
+        class="border rounded px-3 py-1 w-48"
+      />
+      <button
+        id="searchBtn"
+        class="bg-blue-600 text-white px-4 py-1 rounded hover:bg-blue-700 transition"
+      >
+        Buscar
+      </button>
+      <button id="logoutBtn" class="text-blue-600 hover:underline">Sair</button>
     </div>
   </header>
 
   <div class="flex flex-1 overflow-hidden">
-
-    <!-- Sidebar esquerda -->
-    <nav class="bg-white w-48 border-r border-gray-200 flex flex-col p-4 space-y-4">
-      <button data-category="all" class="category-btn bg-blue-100 text-blue-700 rounded-md py-2 font-semibold">Todos</button>
-      <button data-category="servicos" class="category-btn hover:bg-blue-100 rounded-md py-2 font-semibold">Serviços</button>
-      <button data-category="cursos" class="category-btn hover:bg-blue-100 rounded-md py-2 font-semibold">Cursos</button>
-      <button data-category="vagas" class="category-btn hover:bg-blue-100 rounded-md py-2 font-semibold">Vagas</button>
+    <!-- Sidebar -->
+    <nav class="w-64 bg-white border-r overflow-y-auto">
+      <ul class="space-y-2 p-4">
+        <li>
+          <button
+            class="w-full text-left px-3 py-2 rounded hover:bg-blue-100"
+            onclick="showCategory('servicos')"
+          >
+            Serviços
+          </button>
+        </li>
+        <li>
+          <button
+            class="w-full text-left px-3 py-2 rounded hover:bg-blue-100"
+            onclick="showCategory('cursos')"
+          >
+            Cursos
+          </button>
+        </li>
+        <li>
+          <button
+            class="w-full text-left px-3 py-2 rounded hover:bg-blue-100"
+            onclick="showCategory('vagas')"
+          >
+            Vagas
+          </button>
+        </li>
+        <li>
+          <button
+            class="w-full text-left px-3 py-2 rounded hover:bg-blue-100 font-semibold bg-blue-50"
+            onclick="showCategory('motoristas')"
+            id="motoristasBtn"
+          >
+            Motoristas
+          </button>
+        </li>
+        <li>
+          <button
+            class="w-full text-left px-3 py-2 rounded hover:bg-blue-100"
+            onclick="showCategory('motoboys')"
+            id="motoboysBtn"
+          >
+            Motoboys
+          </button>
+        </li>
+      </ul>
     </nav>
 
-    <!-- Conteúdo principal -->
-    <main class="flex-1 overflow-auto p-6 space-y-6">
-      <h2 class="text-2xl font-bold text-gray-800">Anúncios</h2>
-      <div id="adsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Anúncios aparecerão aqui -->
-      </div>
+    <!-- Main content -->
+    <main class="flex-1 overflow-y-auto p-6 bg-gray-50">
+      <!-- Serviços -->
+      <section id="servicos" class="category-section hidden">
+        <h2 class="text-2xl font-semibold mb-4">Serviços Disponíveis</h2>
+        <p>Exemplo de lista de serviços aqui...</p>
+      </section>
+
+      <!-- Cursos -->
+      <section id="cursos" class="category-section hidden">
+        <h2 class="text-2xl font-semibold mb-4">Cursos Disponíveis</h2>
+        <p>Exemplo de lista de cursos aqui...</p>
+      </section>
+
+      <!-- Vagas -->
+      <section id="vagas" class="category-section hidden">
+        <h2 class="text-2xl font-semibold mb-4">Vagas de Emprego</h2>
+        <p>Exemplo de lista de vagas aqui...</p>
+      </section>
+
+      <!-- Motoristas -->
+      <section id="motoristas" class="category-section hidden">
+        <h2 class="text-2xl font-semibold mb-6">Motoristas Disponíveis</h2>
+        <div class="space-y-4">
+          <div class="bg-white p-4 rounded shadow flex justify-between items-center">
+            <div>
+              <p class="font-bold text-lg">Rafael</p>
+              <p class="text-green-600 font-semibold">Disponível</p>
+            </div>
+            <button
+              class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+              onclick="solicitarServico('Rafael')"
+            >
+              Solicitar
+            </button>
+          </div>
+          <div class="bg-white p-4 rounded shadow flex justify-between items-center">
+            <div>
+              <p class="font-bold text-lg">Carla</p>
+              <p class="text-green-600 font-semibold">Disponível</p>
+            </div>
+            <button
+              class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+              onclick="solicitarServico('Carla')"
+            >
+              Solicitar
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Motoboys -->
+      <section id="motoboys" class="category-section hidden">
+        <h2 class="text-2xl font-semibold mb-6">Motoboys Disponíveis</h2>
+        <div class="space-y-4">
+          <div class="bg-white p-4 rounded shadow flex justify-between items-center">
+            <div>
+              <p class="font-bold text-lg">João</p>
+              <p class="text-green-600 font-semibold">Disponível</p>
+            </div>
+            <button
+              class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+              onclick="solicitarServico('João')"
+            >
+              Solicitar
+            </button>
+          </div>
+          <div class="bg-white p-4 rounded shadow flex justify-between items-center">
+            <div>
+              <p class="font-bold text-lg">Maria</p>
+              <p class="text-green-600 font-semibold">Disponível</p>
+            </div>
+            <button
+              class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition"
+              onclick="solicitarServico('Maria')"
+            >
+              Solicitar
+            </button>
+          </div>
+        </div>
+      </section>
     </main>
-
-    <!-- Sidebar direita - Perfil -->
-    <aside class="w-64 bg-white border-l border-gray-200 p-6 flex flex-col space-y-6">
-      <div class="flex flex-col items-center">
-        <img src="https://i.pravatar.cc/100" alt="Avatar" class="rounded-full w-24 h-24 mb-4" />
-        <h3 id="profileName" class="text-xl font-semibold">Usuário Exemplo</h3>
-        <p class="text-gray-600">user@example.com</p>
-      </div>
-
-      <div class="flex flex-col space-y-3">
-        <button class="bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition">Anunciar Serviço</button>
-        <button class="bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition">Anunciar Currículo</button>
-        <button class="bg-purple-600 text-white py-2 rounded-md hover:bg-purple-700 transition">Anunciar Vaga</button>
-        <button class="bg-gray-400 text-gray-900 py-2 rounded-md hover:bg-gray-500 transition">Editar Perfil</button>
-      </div>
-    </aside>
   </div>
 
-<script>
-  // Dados fake dos anúncios
-  const ads = [
-    {
-      id: 1,
-      categoria: 'servicos',
-      titulo: 'Eletricista profissional em Leme, SP',
-      descricao: 'Serviços elétricos residenciais e comerciais.',
-      local: 'Leme, SP',
-      online: false,
-    },
-    {
-      id: 2,
-      categoria: 'servicos',
-      titulo: 'Jardineiro experiente',
-      descricao: 'Manutenção de jardins, poda e limpeza.',
-      local: 'Piracicaba, SP',
-      online: false,
-    },
-    {
-      id: 3,
-      categoria: 'cursos',
-      titulo: 'Curso online de Marketing Digital',
-      descricao: 'Aprenda marketing digital do básico ao avançado.',
-      local: 'Online',
-      online: true,
-    },
-    {
-      id: 4,
-      categoria: 'cursos',
-      titulo: 'Curso presencial de Inglês em Campinas',
-      descricao: 'Aulas presenciais para todos os níveis.',
-      local: 'Campinas, SP',
-      online: false,
-    },
-    {
-      id: 5,
-      categoria: 'vagas',
-      titulo: 'Vaga para assistente administrativo em Leme, SP',
-      descricao: 'Empresa buscando assistente com experiência.',
-      local: 'Leme, SP',
-      online: false,
-    },
-    {
-      id: 6,
-      categoria: 'vagas',
-      titulo: 'Vaga remota para desenvolvedor frontend',
-      descricao: 'Trabalho home office com horário flexível.',
-      local: 'Online',
-      online: true,
-    },
-  ];
-
-  // Estado inicial
-  let selectedCategory = 'all';
-
-  const adsContainer = document.getElementById('adsContainer');
-  const categoryButtons = document.querySelectorAll('.category-btn');
-  const searchForm = document.getElementById('searchForm');
-  const keywordInput = document.getElementById('keywordInput');
-  const locationInput = document.getElementById('locationInput');
-
-  // Função para mostrar anúncios filtrados
-  function renderAds() {
-    const keyword = keywordInput.value.trim().toLowerCase();
-    const location = locationInput.value.trim().toLowerCase();
-
-    const filteredAds = ads.filter(ad => {
-      const matchCategory = selectedCategory === 'all' || ad.categoria === selectedCategory;
-      const matchKeyword = ad.titulo.toLowerCase().includes(keyword) || ad.descricao.toLowerCase().includes(keyword);
-      const matchLocation = ad.online || ad.local.toLowerCase().includes(location) || location === '';
-      return matchCategory && matchKeyword && matchLocation;
-    });
-
-    adsContainer.innerHTML = filteredAds.length
-      ? filteredAds.map(ad => `
-        <div class="bg-white rounded-lg shadow p-5 flex flex-col">
-          <h3 class="text-lg font-semibold text-blue-700 mb-2">${ad.titulo}</h3>
-          <p class="text-gray-700 flex-grow">${ad.descricao}</p>
-          <span class="text-sm text-gray-500 mt-4">${ad.online ? 'Online' : ad.local}</span>
-        </div>
-      `).join('')
-      : '<p class="col-span-full text-gray-500">Nenhum anúncio encontrado para os filtros selecionados.</p>';
-  }
-
-  // Inicializar
-  renderAds();
-
-  // Lógica dos botões da barra lateral esquerda
-  categoryButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      selectedCategory = btn.dataset.category;
-
-      // Atualiza estilos de botão
-      categoryButtons.forEach(b => {
-        b.classList.remove('bg-blue-100', 'text-blue-700');
-        b.classList.add('hover:bg-blue-100');
+  <script>
+    // Mostrar categoria selecionada
+    function showCategory(category) {
+      document.querySelectorAll('.category-section').forEach((sec) => {
+        sec.classList.add('hidden');
       });
-      btn.classList.add('bg-blue-100', 'text-blue-700');
-      btn.classList.remove('hover:bg-blue-100');
+      const selected = document.getElementById(category);
+      if (selected) {
+        selected.classList.remove('hidden');
+      }
+    }
 
-      renderAds();
+    // Por padrão, mostrar motoristas ao entrar
+    showCategory('motoristas');
+
+    // Botão solicitar serviço
+    function solicitarServico(nome) {
+      alert(`Pedido enviado para o ${nome}. Aguarde o contato para combinar o valor.`);
+    }
+
+    // Logout (só exemplo)
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      alert('Logout realizado (simulado).');
+      // Aqui redirecionar para login etc.
     });
-  });
 
-  // Lógica do formulário de busca
-  searchForm.addEventListener('submit', e => {
-    e.preventDefault();
-    renderAds();
-  });
-</script>
-
+    // Buscas - só exemplo simples
+    document.getElementById('searchBtn').addEventListener('click', () => {
+      const location = document.getElementById('locationInput').value.trim();
+      const search = document.getElementById('searchInput').value.trim();
+      alert(`Buscando por "${search}" na região "${location}" (simulado).`);
+    });
+  </script>
 </body>
 </html>
