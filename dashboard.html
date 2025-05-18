@@ -37,7 +37,7 @@
   </header>
 
   <div class="flex flex-1 overflow-hidden">
-    <!-- Sidebar -->
+    <!-- Sidebar esquerda -->
     <nav class="w-64 bg-white border-r overflow-y-auto">
       <ul class="space-y-2 p-4">
         <li>
@@ -68,7 +68,6 @@
           <button
             class="w-full text-left px-3 py-2 rounded hover:bg-blue-100"
             onclick="showCategory('motoristas')"
-            id="motoristasBtn"
           >
             Motoristas
           </button>
@@ -77,7 +76,6 @@
           <button
             class="w-full text-left px-3 py-2 rounded hover:bg-blue-100"
             onclick="showCategory('motoboys')"
-            id="motoboysBtn"
           >
             Motoboys
           </button>
@@ -85,7 +83,7 @@
       </ul>
     </nav>
 
-    <!-- Main content -->
+    <!-- Conteúdo principal central -->
     <main class="flex-1 overflow-y-auto p-6 bg-gray-50">
       <!-- Serviços -->
       <section id="servicos" class="category-section hidden">
@@ -167,6 +165,31 @@
         </div>
       </section>
     </main>
+
+    <!-- Perfil lateral direita -->
+    <aside class="w-80 bg-white border-l p-6 overflow-y-auto">
+      <h2 class="text-xl font-semibold mb-4">Perfil do Usuário</h2>
+      <div class="mb-6">
+        <img
+          src="https://via.placeholder.com/100"
+          alt="Foto do usuário"
+          class="rounded-full mx-auto mb-4"
+        />
+        <p class="text-center font-bold">João Silva</p>
+        <p class="text-center text-gray-500 text-sm">joao@email.com</p>
+      </div>
+      <div class="space-y-3">
+        <button class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">
+          Anunciar Serviço
+        </button>
+        <button class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">
+          Anunciar Currículo
+        </button>
+        <button class="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition">
+          Editar Perfil
+        </button>
+      </div>
+    </aside>
   </div>
 
   <script>
@@ -187,7 +210,7 @@
 
     document.getElementById('logoutBtn').addEventListener('click', () => {
       alert('Logout realizado (simulado).');
-      // Redirecionar para login, por exemplo
+      // Aqui você pode redirecionar para página de login, por exemplo
     });
 
     document.getElementById('searchBtn').addEventListener('click', () => {
