@@ -2,15 +2,57 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Vinkor - Conectando tudo</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gradient-to-r from-[#0a1f44] to-[#005eff] text-white min-h-screen flex flex-col">
+<body class="pt-16 bg-gradient-to-r from-[#0a1f44] to-[#005eff] text-white min-h-screen flex flex-col">
+
+  <!-- NAVBAR FIXA -->
+  <nav class="fixed top-0 left-0 right-0 bg-[#0a1f44] bg-opacity-90 backdrop-blur-sm z-50 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+
+        <!-- Logo -->
+        <div class="flex-shrink-0">
+          <a href="#">
+            <img class="h-10 w-auto" src="/VINKOR.png" alt="Vinkor Logo" />
+          </a>
+        </div>
+
+        <!-- Menu Links -->
+        <div class="hidden md:flex space-x-8">
+          <a href="#features" class="text-white hover:text-cyan-400 font-semibold">Funcionalidades</a>
+          <a href="#about" class="text-white hover:text-cyan-400 font-semibold">Sobre</a>
+          <a href="#contact" class="text-white hover:text-cyan-400 font-semibold">Contato</a>
+        </div>
+
+        <!-- Pesquisa + Login -->
+        <div class="flex items-center space-x-4">
+          <!-- Campo de Pesquisa -->
+          <div>
+            <input
+              type="text"
+              placeholder="Pesquisar..."
+              class="px-3 py-1 rounded-md text-[#0a1f44] focus:outline-none focus:ring-2 focus:ring-cyan-400"
+            />
+          </div>
+          <!-- Botão Login -->
+          <a
+            href="#"
+            id="loginBtn"
+            class="bg-cyan-400 text-[#0a1f44] font-semibold px-4 py-2 rounded-md hover:bg-cyan-500 transition"
+            >Entrar</a
+          >
+        </div>
+
+      </div>
+    </div>
+  </nav>
 
   <!-- HEADER -->
   <header class="text-center py-12 px-4">
-    <img src="/VINKOR.png" alt="Vinkor Logo" class="w-32 mx-auto mb-4">
+    <img src="/VINKOR.png" alt="Vinkor Logo" class="w-32 mx-auto mb-4" />
     <h1 class="text-4xl font-bold mb-2">VINKOR</h1>
     <p class="text-xl">Conectando pessoas e oportunidades</p>
   </header>
@@ -61,13 +103,22 @@
   <!-- LOGIN -->
   <section id="login" class="bg-gray-100 text-[#0a1f44] text-center py-16 px-6">
     <h2 class="text-3xl font-bold mb-4">Acesse sua conta</h2>
-    <a href="#" class="inline-block bg-[#005eff] text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-700 transition">Entrar</a>
+    <a href="#" class="inline-block bg-[#005eff] text-white font-semibold px-6 py-3 rounded-lg hover:bg-blue-700 transition"
+      >Entrar</a
+    >
   </section>
 
-  <!-- FOOTER -->
   <footer class="bg-[#0a1f44] text-white text-center py-4 mt-auto">
     <p>&copy; 2025 Vinkor. Todos os direitos reservados.</p>
   </footer>
+
+  <script>
+    document.getElementById('loginBtn').addEventListener('click', function(e) {
+      e.preventDefault();
+      localStorage.setItem('vinkorLoggedIn', 'true');
+      window.location.href = 'dashboard.html';
+    });
+  </script>
 
 </body>
 </html>
