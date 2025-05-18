@@ -14,8 +14,16 @@
       <img src="/VINKOR.png" alt="Vinkor Logo" class="h-10" />
       <span class="font-bold text-xl">Vinkor</span>
     </div>
+    <div class="flex items-center space-x-6 flex-1 max-w-3xl">
+      <input id="locationInput" type="text" placeholder="Digite sua cidade ou CEP (ex: Leme, SP)" 
+        class="w-full rounded px-4 py-2 text-gray-800 focus:outline-none" />
+      <button id="searchBtn" 
+        class="ml-2 bg-cyan-400 text-[#0a1f44] px-4 py-2 rounded hover:bg-cyan-500 transition">
+        Buscar
+      </button>
+    </div>
     <div class="flex items-center space-x-6">
-      <span>Olá, Usuário</span>
+      <span id="userGreeting">Olá, Usuário</span>
       <button id="logoutBtn" class="bg-cyan-400 text-[#0a1f44] px-4 py-2 rounded hover:bg-cyan-500 transition">
         Sair
       </button>
@@ -39,45 +47,11 @@
 
     <!-- Conteúdo principal -->
     <main class="flex-1 bg-gray-100 p-8 overflow-auto">
+      <h1 class="text-3xl font-bold mb-8 text-[#0a1f44]">Anúncios Disponíveis</h1>
 
-      <h1 class="text-3xl font-bold mb-8 text-[#0a1f44]">Dashboard</h1>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-
-        <section class="bg-white rounded-lg shadow p-6">
-          <h2 class="font-semibold text-xl mb-3">Resumo Geral</h2>
-          <p>Notificações: 3</p>
-          <p>Próximas ações: Ver propostas</p>
-        </section>
-
-        <section class="bg-white rounded-lg shadow p-6">
-          <h2 class="font-semibold text-xl mb-3">Serviços em Destaque</h2>
-          <ul class="list-disc list-inside">
-            <li>Jardinagem</li>
-            <li>Elétrica</li>
-            <li>Consultoria</li>
-          </ul>
-        </section>
-
-        <section class="bg-white rounded-lg shadow p-6">
-          <h2 class="font-semibold text-xl mb-3">Cursos Recomendados</h2>
-          <ul class="list-disc list-inside">
-            <li>Excel Avançado</li>
-            <li>Marketing Digital</li>
-            <li>Gestão de Projetos</li>
-          </ul>
-        </section>
-
+      <div id="adsContainer" class="space-y-8">
+        <!-- Anúncios aparecem aqui -->
       </div>
-
-      <section class="bg-white rounded-lg shadow p-6">
-        <h2 class="font-semibold text-xl mb-3">Meus Anúncios</h2>
-        <p>Ainda não há anúncios cadastrados.</p>
-        <button class="mt-4 bg-cyan-400 text-[#0a1f44] px-4 py-2 rounded hover:bg-cyan-500 transition">
-          Criar Novo Anúncio
-        </button>
-      </section>
-
     </main>
 
   </div>
@@ -93,6 +67,117 @@
       localStorage.removeItem('vinkorLoggedIn');
       window.location.href = 'index.html';
     });
+
+    // Lista de anúncios fictícios
+    const ads = [
+      { id: 1, titulo: "Curso de Excel Avançado", categoria: "Cursos", cidade: "Leme", estado: "SP", descricao: "Aprenda Excel para impulsionar sua carreira." },
+      { id: 2, titulo: "Vaga: Assistente Administrativo", categoria: "Vagas", cidade: "Leme", estado: "SP", descricao: "Empresa local busca assistente administrativo." },
+      { id: 3, titulo: "Serviço de Jardinagem", categoria: "Serviços", cidade: "Piracicaba", estado: "SP", descricao: "Profissional de jardinagem para residências." },
+      { id: 4, titulo: "Curso de Marketing Digital", categoria: "Cursos", cidade: "Campinas", estado: "SP", descricao: "Curso online com certificado." },
+      { id: 5, titulo: "Vaga: Eletricista", categoria: "Vagas", cidade: "Leme", estado: "SP", descricao: "Eletricista com experiência para obra." },
+      { id: 6, titulo: "Serviço de Limpeza", categoria: "Serviços", cidade: "Leme", estado: "SP", descricao: "Limpeza residencial e comercial." },
+      { id: 7, titulo: "Curso de Programação", categoria: "Cursos", cidade: "São Paulo", estado: "SP", descricao: "Curso presencial para iniciantes." },
+      { id: 8, titulo: "Vaga: Recepcionista", categoria: "Vagas", cidade: "Piracicaba", estado: "SP", descricao: "Recepcionista para empresa de saúde." }
+    ];
+
+    const adsContainer = document.getElementById('adsContainer');
+    const locationInput = document.getElementById('locationInput');
+    const searchBtn = document.getElementById('searchBtn');
+
+    function renderAds(filteredAds) {
+      if (filteredAds.length === 0) {
+        adsContainer.innerHTML = `<p class="text-gray-600">Nenhum anúncio encontrado para essa região.</p>`;
+        return;
+      }
+
+      // Agrupa por categoria
+      const grouped = filteredAds.reduce((acc, ad) => {
+        if (!acc[ad.categoria]) acc[ad.categoria] = [];
+        acc[ad.categoria].push(ad);
+        return acc;
+      }, {});
+
+      adsContainer.innerHTML = "";
+
+      for (const categoria in grouped) {
+        const section = document.createElement('section');
+        section.className = "bg-white rounded-lg shadow p-6";
+
+        const h2 = document.createElement('h2');
+        h2.className = "font-semibold text-xl mb-4 text-[#0a1f44]";
+        h2.textContent = categoria;
+        section.appendChild(h2);
+
+        grouped[categoria].forEach(ad => {
+          const card = document.createElement('div');
+          card.className = "border border-gray-300 rounded p-4 mb-3 bg-gray-50";
+
+          const title = document.createElement('h3');
+          title.className = "font-semibold text-lg";
+          title.textContent = ad.titulo;
+
+          const desc = document.createElement('p');
+          desc.className = "text-gray-700";
+          desc.textContent = ad.descricao;
+
+          const location = document.createElement('p');
+          location.className = "text-sm text-gray-500 mt-1";
+          location.textContent = `${ad.cidade} - ${ad.estado}`;
+
+          card.appendChild(title);
+          card.appendChild(desc);
+          card.appendChild(location);
+
+          section.appendChild(card);
+        });
+
+        adsContainer.appendChild(section);
+      }
+    }
+
+    function normalizeString(str) {
+      return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+    }
+
+    function filterAdsByLocation(input) {
+      const normalizedInput = normalizeString(input);
+
+      // Tenta pegar só cidade (antes da vírgula) ou usa tudo
+      const city = normalizedInput.split(",")[0].trim();
+
+      return ads.filter(ad => {
+        const adCity = normalizeString(ad.cidade);
+        const adState = normalizeString(ad.estado);
+
+        // Checa se input contém cidade ou estado (ex: "leme", "sp", "leme sp")
+        return adCity.includes(city) || adState.includes(city) || normalizedInput.includes(adCity) || normalizedInput.includes(adState);
+      });
+    }
+
+    // Carrega inicialmente tudo
+    renderAds(ads);
+
+    // Busca ao clicar no botão
+    searchBtn.addEventListener('click', () => {
+      const input = locationInput.value;
+      if (!input.trim()) {
+        renderAds(ads);
+        return;
+      }
+      const filtered = filterAdsByLocation(input);
+      renderAds(filtered);
+    });
+
+    // Busca ao apertar Enter no campo
+    locationInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        searchBtn.click();
+      }
+    });
+
+    // Exemplo: coloca o nome do usuário se tiver salvo (pode ajustar conforme seu login)
+    const userName = localStorage.getItem('vinkorUserName') || "Usuário";
+    document.getElementById('userGreeting').textContent = `Olá, ${userName}`;
   </script>
 
 </body>
