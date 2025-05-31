@@ -19,7 +19,7 @@
 <body class="bg-gray-100 min-h-screen flex flex-col">
 
     <header class="bg-[#0a1f44] shadow-lg px-6 py-4 flex items-center justify-between text-white rounded-b-xl">
-        <h1 class="text-3xl font-bold text-cyan-400 cursor-pointer" onclick="location.href='dashboard.html'">Vinkor</h1>
+        <a href="dashboard.html" class="text-3xl font-bold text-cyan-400 cursor-pointer">Vinkor Marketplace</a>
 
         <div class="flex-grow max-w-xl mx-6">
             <input
@@ -31,26 +31,50 @@
             />
         </div>
 
-        <nav class="space-x-4 text-gray-200 hidden sm:flex">
-            <button class="px-3 py-2 rounded-lg hover:bg-blue-700 hover:text-white font-semibold transition duration-300 ease-in-out" onclick="filterByCategory('')">Todos</button>
-            <button class="px-3 py-2 rounded-lg hover:bg-blue-700 hover:text-white font-semibold transition duration-300 ease-in-out" onclick="filterByCategory('Eletrônicos')">Eletrônicos</button>
-            <button class="px-3 py-2 rounded-lg hover:bg-blue-700 hover:text-white font-semibold transition duration-300 ease-in-out" onclick="filterByCategory('Móveis')">Móveis</button>
-            <button class="px-3 py-2 rounded-lg hover:bg-blue-700 hover:text-white font-semibold transition duration-300 ease-in-out" onclick="filterByCategory('Veículos')">Veículos</button>
-            <button class="px-3 py-2 rounded-lg hover:bg-blue-700 hover:text-white font-semibold transition duration-300 ease-in-out" onclick="filterByCategory('Imóveis')">Imóveis</button>
-            <button class="px-3 py-2 rounded-lg hover:bg-blue-700 hover:text-white font-semibold transition duration-300 ease-in-out" onclick="filterByCategory('Serviços')">Serviços</button>
-        </nav>
-
-        <a href="#" class="ml-6 bg-cyan-400 text-[#0a1f44] font-bold px-5 py-2 rounded-lg hover:bg-cyan-500 transition duration-300 ease-in-out transform hover:scale-105 shadow-lg">Anunciar</a>
+        <a href="anunciar.html" class="ml-6 bg-cyan-400 text-[#0a1f44] font-bold px-5 py-2 rounded-lg hover:bg-cyan-500 transition duration-300 ease-in-out transform hover:scale-105 shadow-lg">Anunciar</a>
     </header>
 
     <main class="p-6 flex-grow">
-        <h2 class="text-3xl font-bold text-[#0a1f44] mb-8 text-center">Descubra Oportunidades no Marketplace da Vinkor</h2>
+        <h2 class="text-3xl font-bold text-[#0a1f44] mb-8 text-center">Explore o Marketplace da Vinkor</h2>
+
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <label for="localizacaoFilter" class="block text-sm font-medium text-gray-700">Localização:</label>
+                    <input type="text" id="localizacaoFilter" placeholder="Digite a cidade ou estado" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" oninput="filterByLocation()">
+                </div>
+                <div>
+                    <label for="categoriaFilter" class="block text-sm font-medium text-gray-700">Categoria:</label>
+                    <select id="categoriaFilter" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" onchange="filterByCategory(this.value)">
+                        <option value="">Todas as Categorias</option>
+                        <option value="Eletrônicos">Eletrônicos</option>
+                        <option value="Móveis">Móveis</option>
+                        <option value="Veículos">Veículos</option>
+                        <option value="Imóveis">Imóveis</option>
+                        <option value="Serviços">Serviços</option>
+                        <option value="Ferramentas">Ferramentas</option>
+                        <option value="Roupas">Roupas</option>
+                        <option value="Artesanato">Artesanato</option>
+                        <option value="Aluguel">Aluguel</option>
+                        </select>
+                </div>
+                <div>
+                    <label for="ordenacaoFilter" class="block text-sm font-medium text-gray-700">Ordenar por:</label>
+                    <select id="ordenacaoFilter" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" onchange="ordenarItens(this.value)">
+                        <option value="relevancia">Relevância</option>
+                        <option value="preco_asc">Menor Preço</option>
+                        <option value="preco_desc">Maior Preço</option>
+                        <option value="mais_recentes">Mais Recentes</option>
+                    </select>
+                </div>
+            </div>
+        </div>
 
         <div
             id="itemsGrid"
             class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6"
         >
-            <article class="bg-white rounded-xl shadow-md p-5 cursor-pointer hover:shadow-lg transform hover:-translate-y-1 transition duration-300 ease-in-out category-Eletrônicos" data-title="Smartphone Samsung Galaxy" data-category="Eletrônicos" data-location="São Paulo">
+            <article class="bg-white rounded-xl shadow-md p-5 cursor-pointer hover:shadow-lg transform hover:-translate-y-1 transition category-Eletrônicos" data-title="Smartphone Samsung Galaxy" data-category="Eletrônicos" data-location="São Paulo" data-price="1200">
                 <img src="https://placehold.co/300x200/005eff/FFFFFF?text=Smartphone" alt="Smartphone Samsung Galaxy" class="rounded-lg mb-3 w-full h-40 object-cover shadow-sm" />
                 <h3 class="font-bold text-xl text-[#0a1f44] mb-1">Smartphone Samsung Galaxy</h3>
                 <p class="text-green-600 font-semibold text-lg mb-2">R$ 1.200</p>
@@ -63,7 +87,7 @@
                 <button class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out shadow-md">Ver Detalhes</button>
             </article>
 
-            <article class="bg-white rounded-xl shadow-md p-5 cursor-pointer hover:shadow-lg transform hover:-translate-y-1 transition duration-300 ease-in-out category-Móveis" data-title="Sofá Retrátil" data-category="Móveis" data-location="Rio de Janeiro">
+            <article class="bg-white rounded-xl shadow-md p-5 cursor-pointer hover:shadow-lg transform hover:-translate-y-1 transition category-Móveis" data-title="Sofá Retrátil" data-category="Móveis" data-location="Rio de Janeiro">
                 <img src="https://placehold.co/300x200/005eff/FFFFFF?text=Sofá" alt="Sofá Retrátil" class="rounded-lg mb-3 w-full h-40 object-cover shadow-sm" />
                 <h3 class="font-bold text-xl text-[#0a1f44] mb-1">Sofá Retrátil</h3>
                 <p class="text-green-600 font-semibold text-lg mb-2">R$ 850</p>
@@ -76,7 +100,7 @@
                 <button class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out shadow-md">Ver Detalhes</button>
             </article>
 
-            <article class="bg-white rounded-xl shadow-md p-5 cursor-pointer hover:shadow-lg transform hover:-translate-y-1 transition duration-300 ease-in-out category-Veículos" data-title="Carro Fiat Uno" data-category="Veículos" data-location="Leme">
+            <article class="bg-white rounded-xl shadow-md p-5 cursor-pointer hover:shadow-lg transform hover:-translate-y-1 transition category-Veículos" data-title="Carro Fiat Uno" data-category="Veículos" data-location="Leme" data-price="15000">
                 <img src="https://placehold.co/300x200/005eff/FFFFFF?text=Fiat+Uno" alt="Carro Fiat Uno" class="rounded-lg mb-3 w-full h-40 object-cover shadow-sm" />
                 <h3 class="font-bold text-xl text-[#0a1f44] mb-1">Carro Fiat Uno</h3>
                 <p class="text-green-600 font-semibold text-lg mb-2">R$ 15.000</p>
@@ -89,7 +113,7 @@
                 <button class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out shadow-md">Ver Detalhes</button>
             </article>
 
-            <article class="bg-white rounded-xl shadow-md p-5 cursor-pointer hover:shadow-lg transform hover:-translate-y-1 transition duration-300 ease-in-out category-Imóveis" data-title="Apartamento 2 quartos" data-category="Imóveis" data-location="Campinas">
+            <article class="bg-white rounded-xl shadow-md p-5 cursor-pointer hover:shadow-lg transform hover:-translate-y-1 transition category-Imóveis" data-title="Apartamento 2 quartos" data-category="Imóveis" data-location="Campinas" data-price="350000">
                 <img src="https://placehold.co/300x200/005eff/FFFFFF?text=Apartamento" alt="Apartamento 2 quartos" class="rounded-lg mb-3 w-full h-40 object-cover shadow-sm" />
                 <h3 class="font-bold text-xl text-[#0a1f44] mb-1">Apartamento 2 quartos</h3>
                 <p class="text-green-600 font-semibold text-lg mb-2">R$ 350.000</p>
@@ -102,19 +126,33 @@
                 <button class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out shadow-md">Ver Detalhes</button>
             </article>
 
-            <article class="bg-white rounded-xl shadow-md p-5 cursor-pointer hover:shadow-lg transform hover:-translate-y-1 transition duration-300 ease-in-out category-Serviços" data-title="Aula de Inglês" data-category="Serviços" data-location="São Paulo">
-                <img src="https://placehold.co/300x200/005eff/FFFFFF?text=Aula+de+Inglês" alt="Aula de Inglês" class="rounded-lg mb-3 w-full h-40 object-cover shadow-sm" />
-                <h3 class="font-bold text-xl text-[#0a1f44] mb-1">Aula de Inglês</h3>
-                <p class="text-green-600 font-semibold text-lg mb-2">R$ 50/hora</p>
+            <article class="bg-white rounded-xl shadow-md p-5 cursor-pointer hover:shadow-lg transform hover:-translate-y-1 transition category-Imóveis" data-title="Casa para Aluguel" data-category="Imóveis" data-location="Leme" data-price="1500">
+                <img src="https://placehold.co/300x200/005eff/FFFFFF?text=Casa+Aluguel" alt="Casa para Aluguel" class="rounded-lg mb-3 w-full h-40 object-cover shadow-sm" />
+                <h3 class="font-bold text-xl text-[#0a1f44] mb-1">Casa para Aluguel</h3>
+                <p class="text-green-600 font-semibold text-lg mb-2">R$ 1.500/mês</p>
                 <p class="text-gray-500 text-sm flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
                         <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
                     </svg>
-                    São Paulo, SP
+                    Leme, SP
                 </p>
                 <button class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out shadow-md">Ver Detalhes</button>
             </article>
-            </div>
+
+             <article class="bg-white rounded-xl shadow-md p-5 cursor-pointer hover:shadow-lg transform hover:-translate-y-1 transition category-Veículos" data-title="Bicicleta Usada" data-category="Veículos" data-location="Leme" data-price="450">
+                <img src="https://placehold.co/300x200/005eff/FFFFFF?text=Bicicleta" alt="Bicicleta Usada" class="rounded-lg mb-3 w-full h-40 object-cover shadow-sm" />
+                <h3 class="font-bold text-xl text-[#0a1f44] mb-1">Bicicleta Usada</h3>
+                <p class="text-green-600 text-lg mb-2">R$ 450</p>
+                <p class="text-gray-500 text-sm flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-blue-500" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd" />
+                    </svg>
+                    Leme, SP
+                </p>
+                <button class="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-full transition duration-300 ease-in-out shadow-md">Ver Detalhes</button>
+            </article>
+
+        </div>
     </main>
 
     <footer class="bg-[#0a1f44] text-white text-center py-6 mt-auto rounded-t-xl shadow-inner">
@@ -126,16 +164,23 @@
     </footer>
 
     <script>
-        // Função para filtrar itens com base na pesquisa de texto
+        // Função para filtrar itens com base na pesquisa de texto (título e categoria)
         function filterItems() {
             const search = document.getElementById('searchInput').value.toLowerCase();
             const items = document.querySelectorAll('#itemsGrid article');
+            const localizacaoFilterValue = document.getElementById('localizacaoFilter').value.toLowerCase();
+            const categoriaFilterValue = document.getElementById('categoriaFilter').value.toLowerCase();
 
             items.forEach(item => {
                 const title = item.getAttribute('data-title').toLowerCase();
                 const category = item.getAttribute('data-category').toLowerCase();
-                // Mostra o item se o título ou a categoria contiver o texto da pesquisa
-                if (title.includes(search) || category.includes(search)) {
+                const location = item.getAttribute('data-location').toLowerCase();
+
+                const matchesSearch = title.includes(search) || category.includes(search);
+                const matchesLocation = !localizacaoFilterValue || location.includes(localizacaoFilterValue);
+                const matchesCategory = !categoriaFilterValue || category === categoriaFilterValue;
+
+                if (matchesSearch && matchesLocation && matchesCategory) {
                     item.style.display = '';
                 } else {
                     item.style.display = 'none';
@@ -145,18 +190,40 @@
 
         // Função para filtrar itens por categoria
         function filterByCategory(category) {
-            const items = document.querySelectorAll('#itemsGrid article');
-            const catLower = category.toLowerCase(); // Converte a categoria para minúsculas
+            document.getElementById('searchInput').value = ''; // Limpa a pesquisa ao filtrar por categoria
+            filterItems(); // Re-aplica todos os filtros
+        }
 
-            items.forEach(item => {
-                const itemCat = item.getAttribute('data-category').toLowerCase();
-                // Mostra o item se a categoria for vazia (todos) ou corresponder à categoria selecionada
-                if (!category || itemCat === catLower) {
-                    item.style.display = '';
-                } else {
-                    item.style.display = 'none';
+        // Função para filtrar itens por localização
+        function filterByLocation() {
+            filterItems(); // Re-aplica todos os filtros
+        }
+
+        // Função para ordenar os itens
+        function ordenarItens(criterio) {
+            const grid = document.getElementById('itemsGrid');
+            const items = Array.from(grid.querySelectorAll('article'));
+
+            items.sort((a, b) => {
+                if (criterio === 'preco_asc') {
+                    const precoA = parseFloat(a.getAttribute('data-price'));
+                    const precoB = parseFloat(b.getAttribute('data-price'));
+                    return precoA - precoB;
+                } else if (criterio === 'preco_desc') {
+                    const precoA = parseFloat(a.getAttribute('data-price'));
+                    const precoB = parseFloat(b.getAttribute('data-price'));
+                    return precoB - precoA;
+                } else if (criterio === 'mais_recentes') {
+                    // Para "mais recentes", você precisaria de um timestamp nos dados.
+                    // Por enquanto, manterá a ordem original se não houver timestamp.
+                    return 0;
                 }
+                // Para 'relevancia' ou outros, manter a ordem original ou usar outra lógica
+                return 0;
             });
+
+            // Re-adiciona os itens ordenados ao grid
+            items.forEach(item => grid.appendChild(item));
         }
 
         // Exemplo de verificação de login ao carregar a página (opcional, para proteção de rota)
