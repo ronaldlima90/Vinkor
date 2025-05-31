@@ -23,6 +23,7 @@
             <h2 class="text-3xl font-bold text-cyan-400 cursor-pointer" onclick="location.href='dashboard.html'">Vinkor</h2>
         </div>
         <nav class="flex-grow p-4 space-y-2 text-gray-200">
+            <a href="#anuncios-rolando" class="block px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out">Anúncios em Destaque</a>
             <a href="#overview" class="block px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out">Visão Geral</a>
             <a href="#servicos" class="block px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out">Serviços</a>
             <a href="#cursos" class="block px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out">Cursos</a>
@@ -45,7 +46,53 @@
     </aside>
 
     <main class="flex-grow p-6 bg-white shadow-xl rounded-lg m-4">
-        <section id="overview" class="mb-8">
+        <section id="anuncios-rolando" class="mb-8 bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-2xl font-bold text-[#0a1f44] mb-4">Anúncios em Destaque</h2>
+            <p class="text-gray-700 mb-4">Confira os anúncios mais recentes e relevantes para você:</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-gray-50 rounded-lg p-4 shadow-sm border border-gray-200 hover:shadow-md transition duration-300 ease-in-out">
+                    <h3 class="font-semibold text-lg text-blue-700 mb-1">Eletricista Residencial - Urgência 24h</h3>
+                    <p class="text-gray-600 text-sm mb-2">Por: Pedro Silva - Leme, SP</p>
+                    <p class="text-gray-500 text-sm">Instalação e manutenção elétrica, reparos rápidos. Atendimento em toda a região.</p>
+                    <a href="#" class="mt-3 inline-block text-blue-500 hover:underline text-sm">Ver Detalhes</a>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4 shadow-sm border border-gray-200 hover:shadow-md transition duration-300 ease-in-out">
+                    <h3 class="font-semibold text-lg text-green-700 mb-1">Vaga: Desenvolvedor Web Júnior</h3>
+                    <p class="text-gray-600 text-sm mb-2">Por: Tech Solutions Ltda. - Campinas, SP</p>
+                    <p class="text-gray-500 text-sm">Buscamos desenvolvedor com experiência em HTML, CSS e JavaScript. CLT.</p>
+                    <a href="#" class="mt-3 inline-block text-green-500 hover:underline text-sm">Ver Detalhes</a>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4 shadow-sm border border-gray-200 hover:shadow-md transition duration-300 ease-in-out">
+                    <h3 class="font-semibold text-lg text-orange-700 mb-1">Smartphone Usado - Ótimo Estado</h3>
+                    <p class="text-gray-600 text-sm mb-2">Por: Ana Paula - Araras, SP</p>
+                    <p class="text-gray-500 text-sm">Vendo iPhone 11, 128GB, sem detalhes. Acompanha carregador. Preço negociável.</p>
+                    <a href="#" class="mt-3 inline-block text-orange-500 hover:underline text-sm">Ver Detalhes</a>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4 shadow-sm border border-gray-200 hover:shadow-md transition duration-300 ease-in-out">
+                    <h3 class="font-semibold text-lg text-purple-700 mb-1">Serviço de Diarista - Limpeza Pós-Obra</h3>
+                    <p class="text-gray-600 text-sm mb-2">Por: Cláudia Santos - Piracicaba, SP</p>
+                    <p class="text-gray-500 text-sm">Limpeza pesada e detalhada após obras. Orçamento sem compromisso.</p>
+                    <a href="#" class="mt-3 inline-block text-purple-500 hover:underline text-sm">Ver Detalhes</a>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4 shadow-sm border border-gray-200 hover:shadow-md transition duration-300 ease-in-out">
+                    <h3 class="font-semibold text-lg text-cyan-700 mb-1">Motoboy para Entregas Rápidas</h3>
+                    <p class="text-gray-600 text-sm mb-2">Por: Rafael Entregas - Rio Claro, SP</p>
+                    <p class="text-gray-500 text-sm">Serviço de motoboy para documentos e pequenas encomendas. Agilidade e segurança.</p>
+                    <a href="#" class="mt-3 inline-block text-cyan-500 hover:underline text-sm">Ver Detalhes</a>
+                </div>
+                <div class="bg-gray-50 rounded-lg p-4 shadow-sm border border-gray-200 hover:shadow-md transition duration-300 ease-in-out">
+                    <h3 class="font-semibold text-lg text-red-700 mb-1">Vaga: Motorista de Aplicativo - Urgente</h3>
+                    <p class="text-gray-600 text-sm mb-2">Por: Transportes Express - São Carlos, SP</p>
+                    <p class="text-gray-500 text-sm">Procuramos motoristas com CNH categoria B, para início imediato. Flexibilidade de horário.</p>
+                    <a href="#" class="mt-3 inline-block text-red-500 hover:underline text-sm">Ver Detalhes</a>
+                </div>
+            </div>
+            <div class="text-center mt-6">
+                <a href="marketplace.html" class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded-full transition duration-300 ease-in-out shadow-md">Ver Todos os Anúncios</a>
+            </div>
+        </section>
+
+        <section id="overview" class="mt-12 mb-8">
             <h1 class="text-4xl font-bold mb-6 text-[#0a1f44]">Bem-vindo ao seu Dashboard, Usuário!</h1>
             <p class="text-gray-700 text-lg mb-6">Aqui você pode acessar rapidamente as principais funcionalidades da Vinkor e ver as últimas oportunidades e atualizações da sua região.</p>
 
@@ -108,6 +155,7 @@
                 </li>
             </ul>
         </section>
+
 
     </main>
 
