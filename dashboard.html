@@ -1,52 +1,139 @@
 <!DOCTYPE html>
 <html lang="pt-BR" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Vinkor Dashboard</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vinkor Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Estilos para rolagem suave ao clicar nos links internos */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
 </head>
 <body class="flex min-h-screen bg-gray-100">
 
-  <!-- Sidebar -->
-  <aside class="w-64 bg-white shadow-md flex flex-col">
-    <div class="px-6 py-4 border-b">
-      <h2 class="text-2xl font-bold text-blue-700 cursor-pointer" onclick="location.href='dashboard.html'">Vinkor</h2>
-    </div>
-    <nav class="flex-grow p-4 space-y-4 text-gray-700">
-      <button class="w-full text-left px-3 py-2 rounded hover:bg-blue-100" onclick="alert('Serviços')">Serviços</button>
-      <button class="w-full text-left px-3 py-2 rounded hover:bg-blue-100" onclick="alert('Cursos')">Cursos</button>
-      <button class="w-full text-left px-3 py-2 rounded hover:bg-blue-100" onclick="alert('Vagas')">Vagas</button>
-      <button class="w-full text-left px-3 py-2 rounded hover:bg-blue-100" onclick="alert('Motoristas')">Motoristas</button>
-      <button class="w-full text-left px-3 py-2 rounded hover:bg-blue-100" onclick="alert('Motoboys')">Motoboys</button>
-      <button
-        class="w-full text-left px-3 py-2 rounded hover:bg-blue-100 font-semibold text-blue-700"
-        onclick="location.href='marketplace.html'"
-      >
-        Marketplace
-      </button>
-    </nav>
-    <div class="px-6 py-4 border-t text-gray-600">
-      <details>
-        <summary class="cursor-pointer">Usuário Exemplo ▼</summary>
-        <div class="mt-2 space-y-2 text-sm">
-          <button class="w-full text-left hover:underline" onclick="alert('Meu Perfil')">Meu Perfil</button>
-          <button class="w-full text-left hover:underline" onclick="alert('Anunciar')">Anunciar</button>
-          <button class="w-full text-left hover:underline" onclick="alert('Currículo')">Currículo</button>
-          <button class="w-full text-left hover:underline" onclick="alert('Sair')">Sair</button>
+    <aside class="w-64 bg-[#0a1f44] shadow-lg flex flex-col text-white rounded-r-xl">
+        <div class="px-6 py-5 border-b border-gray-700">
+            <h2 class="text-3xl font-bold text-cyan-400 cursor-pointer" onclick="location.href='dashboard.html'">Vinkor</h2>
         </div>
-      </details>
-    </div>
-  </aside>
+        <nav class="flex-grow p-4 space-y-2 text-gray-200">
+            <a href="#overview" class="block px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out">Visão Geral</a>
+            <a href="#servicos" class="block px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out">Serviços</a>
+            <a href="#cursos" class="block px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out">Cursos</a>
+            <a href="#vagas" class="block px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out">Vagas</a>
+            <a href="#motoristas" class="block px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out">Motoristas</a>
+            <a href="#motoboys" class="block px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out">Motoboys</a>
+            <a href="marketplace.html" class="block px-4 py-2 rounded-lg hover:bg-blue-700 font-semibold text-cyan-400 transition duration-300 ease-in-out">Marketplace</a>
+            </nav>
+        <div class="px-6 py-5 border-t border-gray-700 text-gray-300">
+            <details>
+                <summary class="cursor-pointer font-semibold text-lg hover:text-white transition duration-300 ease-in-out">Usuário Exemplo ▼</summary>
+                <div class="mt-3 space-y-2 text-sm">
+                    <a href="#perfil" class="block px-2 py-1 rounded hover:bg-blue-700 transition duration-300 ease-in-out">Meu Perfil</a>
+                    <a href="#anunciar" class="block px-2 py-1 rounded hover:bg-blue-700 transition duration-300 ease-in-out">Anunciar</a>
+                    <a href="#curriculo" class="block px-2 py-1 rounded hover:bg-blue-700 transition duration-300 ease-in-out">Currículo</a>
+                    <a href="#" id="logoutBtn" class="block px-2 py-1 rounded hover:bg-red-700 text-red-400 font-semibold transition duration-300 ease-in-out">Sair</a>
+                </div>
+            </details>
+        </div>
+    </aside>
 
-  <!-- Conteúdo principal -->
-  <main class="flex-grow p-6">
-    <h1 class="text-3xl font-bold mb-6">Bem-vindo ao seu Dashboard</h1>
+    <main class="flex-grow p-6 bg-white shadow-xl rounded-lg m-4">
+        <section id="overview" class="mb-8">
+            <h1 class="text-4xl font-bold mb-6 text-[#0a1f44]">Bem-vindo ao seu Dashboard, Usuário!</h1>
+            <p class="text-gray-700 text-lg mb-6">Aqui você pode acessar rapidamente as principais funcionalidades da Vinkor e ver as últimas oportunidades e atualizações da sua região.</p>
 
-    <p>Aqui você verá os anúncios e oportunidades da sua região.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-white rounded-xl shadow-md p-6 border-b-4 border-blue-500 hover:shadow-xl transform hover:-translate-y-1 transition duration-300 ease-in-out">
+                    <h3 class="text-2xl font-semibold text-blue-700 mb-3">Suas Vagas Salvas</h3>
+                    <p class="text-gray-600 mb-4">Visualize e gerencie as vagas de emprego que você salvou para se candidatar depois.</p>
+                    <a href="#" class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-5 rounded-full text-base transition duration-300 ease-in-out shadow-md">Ver Vagas</a>
+                </div>
 
-    <!-- Aqui você pode adicionar o conteúdo principal do dashboard -->
-  </main>
+                <div class="bg-white rounded-xl shadow-md p-6 border-b-4 border-green-500 hover:shadow-xl transform hover:-translate-y-1 transition duration-300 ease-in-out">
+                    <h3 class="text-2xl font-semibold text-green-700 mb-3">Seus Serviços Anunciados</h3>
+                    <p class="text-gray-600 mb-4">Gerencie os serviços que você está oferecendo e veja novas solicitações de clientes.</p>
+                    <a href="#" class="inline-block bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-5 rounded-full text-base transition duration-300 ease-in-out shadow-md">Gerenciar Serviços</a>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-md p-6 border-b-4 border-orange-500 hover:shadow-xl transform hover:-translate-y-1 transition duration-300 ease-in-out">
+                    <h3 class="text-2xl font-semibold text-orange-700 mb-3">Cursos em Andamento</h3>
+                    <p class="text-gray-600 mb-4">Acesse os cursos que você está fazendo para aprimorar suas habilidades e obter certificados.</p>
+                    <a href="#" class="inline-block bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-5 rounded-full text-base transition duration-300 ease-in-out shadow-md">Ver Cursos</a>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-md p-6 border-b-4 border-purple-500 hover:shadow-xl transform hover:-translate-y-1 transition duration-300 ease-in-out">
+                    <h3 class="text-2xl font-semibold text-purple-700 mb-3">Seus Anúncios no Marketplace</h3>
+                    <p class="text-gray-600 mb-4">Gerencie seus produtos à venda e acompanhe as negociações com compradores.</p>
+                    <a href="#" class="inline-block bg-purple-500 hover:bg-purple-600 text-white font-bold py-2 px-5 rounded-full text-base transition duration-300 ease-in-out shadow-md">Ver Anúncios</a>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-md p-6 border-b-4 border-cyan-500 hover:shadow-xl transform hover:-translate-y-1 transition duration-300 ease-in-out">
+                    <h3 class="text-2xl font-semibold text-cyan-700 mb-3">Sua Reputação</h3>
+                    <p class="text-gray-600 mb-4">Veja suas avaliações e selos de confiança para atrair mais oportunidades.</p>
+                    <a href="#" class="inline-block bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2 px-5 rounded-full text-base transition duration-300 ease-in-out shadow-md">Ver Reputação</a>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-md p-6 border-b-4 border-red-500 hover:shadow-xl transform hover:-translate-y-1 transition duration-300 ease-in-out">
+                    <h3 class="text-2xl font-semibold text-red-700 mb-3">Notificações Recentes</h3>
+                    <p class="text-gray-600 mb-4">Fique por dentro de novas mensagens, solicitações e atualizações importantes.</p>
+                    <a href="#" class="inline-block bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-5 rounded-full text-base transition duration-300 ease-in-out shadow-md">Ver Notificações</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="notifications" class="mt-12 bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-2xl font-bold text-[#0a1f44] mb-4">Atividade Recente</h2>
+            <ul class="space-y-4">
+                <li class="flex items-center space-x-3 text-gray-700">
+                    <span class="text-green-500 text-xl">✅</span>
+                    <span><span class="font-semibold">Nova avaliação</span> para o serviço "Instalação Elétrica Residencial" de Maria Silva.</span>
+                </li>
+                <li class="flex items-center space-x-3 text-gray-700">
+                    <span class="text-blue-500 text-xl">📧</span>
+                    <span>Você recebeu uma <span class="font-semibold">nova mensagem</span> de João Contratante.</span>
+                </li>
+                <li class="flex items-center space-x-3 text-gray-700">
+                    <span class="text-orange-500 text-xl">🌟</span>
+                    <span>Seu anúncio no marketplace "Celular Usado" recebeu <span class="font-semibold">5 novas visualizações</span>.</span>
+                </li>
+                <li class="flex items-center space-x-3 text-gray-700">
+                    <span class="text-purple-500 text-xl">💼</span>
+                    <span><span class="font-semibold">Nova vaga</span> de "Auxiliar Administrativo" em sua região.</span>
+                </li>
+            </ul>
+        </section>
+
+    </main>
+
+    <script>
+        // Script para o botão de sair (logout)
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault(); // Previne o comportamento padrão do link
+            // Remove o estado de login do localStorage
+            localStorage.removeItem('vinkorLoggedIn');
+            // Redireciona para a página inicial ou de login
+            window.location.href = 'index.html'; // Redireciona para a página inicial
+        });
+
+        // Adicione aqui scripts para carregar dados dinamicamente no dashboard
+        // Exemplo: Função para verificar o status de login (se o usuário acessou diretamente o dashboard)
+        window.onload = function() {
+            const isLoggedIn = localStorage.getItem('vinkorLoggedIn');
+            if (!isLoggedIn) {
+                // Se não estiver logado, redireciona para a página inicial
+                window.location.href = 'index.html';
+            }
+            // Aqui você pode adicionar lógica para carregar dados do usuário, notificações, etc.
+            // Por exemplo, uma função para buscar dados do perfil do usuário e exibir o nome real.
+        };
+    </script>
 
 </body>
 </html>
