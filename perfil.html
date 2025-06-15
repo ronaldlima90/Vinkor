@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vinkor - Meu Perfil</title>
+    <!-- Inclui o Tailwind CSS para estilização rápida e responsiva -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Define a fonte Inter como padrão, consistente com as outras páginas -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            /* Fundo gradiente da Vinkor */
+            background: linear-gradient(to bottom right, #0a1f44, #005eff);
+        }
+        /* Estilo para rolagem suave */
+        html {
+            scroll-behavior: smooth;
+        }
+        .form-input {
+            @apply mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-[#0a1f44];
+        }
+        .form-label {
+            @apply block text-sm font-medium text-gray-700 mb-1;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center py-10">
+
+    <!-- Barra Superior - Header da Página de Perfil -->
+    <header class="bg-[#0a1f44] shadow-lg px-6 py-4 flex items-center justify-between text-white rounded-b-xl w-full max-w-7xl">
+        <!-- Título/Logo da Vinkor, clicável para voltar ao dashboard -->
+        <a href="dashboard.html" class="text-3xl font-bold text-cyan-400 cursor-pointer">Vinkor Meu Perfil</a>
+
+        <!-- Campo de Pesquisa (Opcional, se quiser pesquisa global aqui) -->
+        <div class="flex-grow max-w-xl mx-6">
+            <input
+                type="text"
+                placeholder="Pesquisar..."
+                class="w-full px-4 py-2 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-400 text-[#0a1f44] shadow-inner"
+            />
+        </div>
+
+        <!-- Botão Sair -->
+        <a href="#" id="logoutBtnHeader" class="ml-6 bg-red-500 text-white font-bold px-5 py-2 rounded-lg hover:bg-red-600 transition duration-300 ease-in-out transform hover:scale-105 shadow-lg">Sair</a>
+    </header>
+
+    <!-- Conteúdo principal da Página de Perfil -->
+    <main class="flex-grow p-6 bg-white shadow-xl rounded-lg m-4 w-full max-w-4xl mx-auto text-[#0a1f44]">
+        <h1 class="text-3xl font-bold mb-6 text-center">Configurações do Meu Perfil</h1>
+
+        <!-- Mensagens de Feedback -->
+        <div id="profile-message" class="text-center text-sm font-medium mb-4"></div>
+
+        <form id="profileForm" class="space-y-6">
+            <!-- Dados do Usuário Logado (apenas visualização) -->
+            <div class="border-b pb-6 border-gray-200">
+                <h2 class="text-2xl font-bold mb-4">Informações da Conta</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="form-label">Email Cadastrado:</label>
+                        <p id="accountEmail" class="mt-1 text-gray-800 font-semibold"></p>
+                    </div>
+                    <div>
+                        <label class="form-label">ID do Usuário:</label>
+                        <p id="accountUid" class="mt-1 text-gray-600 text-sm"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dados Pessoais do Perfil -->
+            <div class="border-b pb-6 border-gray-200">
+                <h2 class="text-2xl font-bold mb-4">Dados Pessoais</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="nomeCompleto" class="form-label">Nome Completo:</label>
+                        <input type="text" id="nomeCompleto" name="nomeCompleto" class="form-input" placeholder="Seu nome completo">
+                    </div>
+                    <div>
+                        <label for="telefone" class="form-label">Telefone:</label>
+                        <input type="tel" id="telefone" name="telefone" class="form-input" placeholder="(XX) XXXXX-XXXX">
+                    </div>
+                    <div>
+                        <label for="localizacao" class="form-label">Localização (Cidade/Estado):</label>
+                        <input type="text" id="localizacao" name="localizacao" class="form-input" placeholder="Ex: Leme, SP">
+                    </div>
+                    <div>
+                        <label for="tipoUsuario" class="form-label">Eu sou:</label>
+                        <select id="tipoUsuario" name="tipoUsuario" class="form-input">
+                            <option value="">Selecione seu tipo de perfil</option>
+                            <option value="candidato">Candidato a Vagas</option>
+                            <option value="microempreendedor">Microempreendedor/Autônomo (Serviços)</option>
+                            <option value="motorista">Motorista Profissional</option>
+                            <option value="motoboy">Motoboy Profissional</option>
+                            <option value="empresa">Empresa/Recrutador</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <label for="bio" class="form-label">Breve Descrição/Bio:</label>
+                    <textarea id="bio" name="bio" rows="3" class="form-input" placeholder="Conte um pouco sobre você ou sua área de atuação..."></textarea>
+                </div>
+            </div>
+
+            <!-- Imagem de Perfil (Avatar) -->
+            <div class="border-b pb-6 border-gray-200">
+                <h2 class="text-2xl font-bold mb-4">Sua Foto de Perfil</h2>
+                <div class="flex flex-col items-center space-y-4">
+                    <img id="profileImagePreview" class="w-32 h-32 rounded-full object-cover border-4 border-blue-500 shadow-md" src="https://placehold.co/128x128/ccc/white?text=Avatar" alt="Foto de Perfil">
+                    <input type="file" id="profileImageUpload" accept="image/*" class="text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer">
+                    <p class="text-sm text-gray-500">Clique na foto para trocar ou envie um arquivo (JPG, PNG).</p>
+                </div>
+            </div>
+
+            <!-- Botão Salvar Perfil -->
+            <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out transform hover:scale-105 shadow-lg text-xl">
+                Salvar Perfil
+            </button>
+        </form>
+    </main>
+
+    <!-- FOOTER - Consistente com as outras páginas da Vinkor -->
+    <footer class="bg-[#0a1f44] text-white text-center py-6 mt-auto rounded-t-xl shadow-inner w-full">
+        <p>&copy; 2025 Vinkor. Todos os direitos reservados.</p>
+        <div class="flex justify-center space-x-6 mt-4">
+            <a href="#" class="text-gray-400 hover:text-white transition duration-300">Termos de Uso</a>
+            <a href="#" class="text-gray-400 hover:text-white transition duration-300">Política de Privacidade</a>
+        </div>
+    </footer>
+
+    <!-- Firebase SDKs e JavaScript para Perfil -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-storage.js";
+
+        // Suas configurações Firebase (SUBSTITUA PELAS SUAS CREDENCIAIS REAIS)
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+            apiKey: "YOUR_API_KEY",
+            authDomain: "YOUR_AUTH_DOMAIN",
+            projectId: "YOUR_PROJECT_ID",
+            storageBucket: "YOUR_STORAGE_BUCKET",
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+            appId: "YOUR_APP_ID",
+            measurementId: "YOUR_MEASUREMENT_ID"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const storage = getStorage(app);
+
+        // Referências aos elementos da UI
+        const profileMessage = document.getElementById('profile-message');
+        const profileForm = document.getElementById('profileForm');
+        const accountEmail = document.getElementById('accountEmail');
+        const accountUid = document.getElementById('accountUid');
+        const nomeCompletoInput = document.getElementById('nomeCompleto');
+        const telefoneInput = document.getElementById('telefone');
+        const localizacaoInput = document.getElementById('localizacao');
+        const tipoUsuarioSelect = document.getElementById('tipoUsuario');
+        const bioInput = document.getElementById('bio');
+        const profileImagePreview = document.getElementById('profileImagePreview');
+        const profileImageUpload = document.getElementById('profileImageUpload');
+        const logoutBtnHeader = document.getElementById('logoutBtnHeader');
+
+        let currentUserId = null; // Para armazenar o UID do usuário logado
+
+        // --- Funções de Ajuda ---
+        function showMessage(element, message, isError = false) {
+            element.textContent = message;
+            element.className = `text-center text-sm font-medium mt-2 ${isError ? 'text-red-500' : 'text-green-500'}`;
+        }
+
+        // --- Funções de Autenticação e Carregamento de Perfil ---
+
+        // Proteção de rota e carregamento do perfil ao carregar a página
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentUserId = user.uid;
+                accountEmail.textContent = user.email || 'N/A';
+                accountUid.textContent = user.uid;
+                await loadUserProfile(user.uid); // Carrega os dados do perfil do Firestore
+            } else {
+                // Se não houver usuário logado, redireciona para a página de autenticação
+                window.location.href = 'auth.html';
+            }
+        });
+
+        // Função para carregar o perfil do usuário do Firestore
+        async function loadUserProfile(uid) {
+            try {
+                const userProfileDocRef = doc(db, `artifacts/${appId}/users/${uid}/profile`, 'details');
+                const docSnap = await getDoc(userProfileDocRef);
+
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    nomeCompletoInput.value = data.nomeCompleto || '';
+                    telefoneInput.value = data.telefone || '';
+                    localizacaoInput.value = data.localizacao || '';
+                    tipoUsuarioSelect.value = data.tipoUsuario || '';
+                    bioInput.value = data.bio || '';
+                    if (data.profileImageUrl) {
+                        profileImagePreview.src = data.profileImageUrl;
+                    }
+                    showMessage(profileMessage, 'Perfil carregado com sucesso!');
+                } else {
+                    showMessage(profileMessage, 'Nenhum perfil encontrado. Preencha seus dados!', false);
+                }
+            } catch (error) {
+                console.error("Erro ao carregar perfil:", error);
+                showMessage(profileMessage, 'Erro ao carregar perfil. Tente novamente.', true);
+            }
+        }
+
+        // --- Upload de Imagem de Perfil ---
+        profileImagePreview.addEventListener('click', () => {
+            profileImageUpload.click(); // Simula o clique no input file
+        });
+
+        profileImageUpload.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            if (!currentUserId) {
+                showMessage(profileMessage, 'Erro: Usuário não logado para fazer upload de imagem.', true);
+                return;
+            }
+
+            showMessage(profileMessage, 'Fazendo upload da imagem...', false);
+            try {
+                const storageRef = ref(storage, `users/${currentUserId}/profile.jpg`); // Caminho da imagem no Storage
+                await uploadBytes(storageRef, file);
+                const imageUrl = await getDownloadURL(storageRef); // Pega a URL pública da imagem
+
+                profileImagePreview.src = imageUrl; // Atualiza a pré-visualização
+                // Salvar a URL da imagem no documento do perfil do usuário no Firestore
+                const userProfileDocRef = doc(db, `artifacts/${appId}/users/${currentUserId}/profile`, 'details');
+                await setDoc(userProfileDocRef, { profileImageUrl: imageUrl }, { merge: true }); // Usar merge para não sobrescrever outros campos
+                showMessage(profileMessage, 'Foto de perfil atualizada com sucesso!');
+            } catch (error) {
+                console.error("Erro ao fazer upload da imagem:", error);
+                showMessage(profileMessage, 'Erro ao fazer upload da imagem. Tente novamente.', true);
+            }
+        });
+
+
+        // --- Salvar Perfil no Firestore ---
+        profileForm.addEventListener('submit', async (e) => {
+            e.preventDefault(); // Impede o envio padrão do formulário
+
+            if (!currentUserId) {
+                showMessage(profileMessage, 'Você precisa estar logado para salvar o perfil.', true);
+                return;
+            }
+
+            showMessage(profileMessage, 'Salvando perfil...', false);
+            const profileData = {
+                nomeCompleto: nomeCompletoInput.value.trim(),
+                telefone: telefoneInput.value.trim(),
+                localizacao: localizacaoInput.value.trim(),
+                tipoUsuario: tipoUsuarioSelect.value,
+                bio: bioInput.value.trim(),
+                lastUpdated: new Date() // Adiciona um timestamp de última atualização
+            };
+
+            try {
+                // Salva os dados do perfil em um documento 'details' na subcoleção 'profile' do usuário
+                const userProfileDocRef = doc(db, `artifacts/${appId}/users/${currentUserId}/profile`, 'details');
+                await setDoc(userProfileDocRef, profileData, { merge: true }); // Usar merge para não sobrescrever a URL da imagem se já existir
+                showMessage(profileMessage, 'Perfil salvo com sucesso!', false);
+            } catch (error) {
+                console.error("Erro ao salvar perfil:", error);
+                showMessage(profileMessage, 'Erro ao salvar perfil. Tente novamente.', true);
+            }
+        });
+
+        // --- Funcionalidade de Logout (Botão no Header) ---
+        logoutBtnHeader.addEventListener('click', async (e) => {
+            e.preventDefault();
+            try {
+                await signOut(auth);
+                localStorage.removeItem('vinkorLoggedIn'); // Limpa o status de login local
+                window.location.href = 'index.html'; // Redireciona para a página inicial
+            } catch (error) {
+                console.error("Erro ao fazer logout:", error);
+                alert("Erro ao fazer logout. Tente novamente."); // Usando alert provisório
+            }
+        });
+
+        /*
+        *** REGRAS DE SEGURANÇA DO FIRESTORE E STORAGE (Importante!) ***
+
+        Para que o Firestore e o Cloud Storage funcionem corretamente e de forma segura,
+        você precisará configurar as regras de segurança no console do Firebase.
+
+        Para Firestore (já fornecidas no auth.html, mas repetidas para contexto):
+        rules_version = '2';
+        service cloud.firestore {
+          match /databases/{database}/documents {
+            match /artifacts/{appId}/users/{userId}/{documents=**} {
+              allow read, write: if request.auth != null && request.auth.uid == userId;
+            }
+          }
+        }
+
+        Para Cloud Storage (necessário para upload de fotos de perfil):
+        No Firebase Console -> Build -> Storage -> Regras
+
+        rules_version = '2';
+        service firebase.storage {
+          match /b/{bucket}/o {
+            match /users/{userId}/{allPaths=**} {
+              allow read: if request.auth != null && request.auth.uid == userId; // O usuário pode ler suas próprias fotos
+              allow write: if request.auth != null && request.auth.uid == userId; // O usuário pode escrever suas próprias fotos
+            }
+          }
+        }
+
+        LEMBRE-SE: Para desenvolvimento, pode-se usar regras mais permissivas.
+        Para produção, as regras devem ser MUITO rigorosas para evitar acesso não autorizado.
+        */
+    </script>
+</body>
+</html>
