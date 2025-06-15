@@ -24,6 +24,19 @@
         .form-label {
             @apply block text-sm font-medium text-gray-700 mb-1;
         }
+        /* Estilo para o spinner de carregamento */
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex flex-col items-center py-10">
@@ -47,7 +60,7 @@
     </header>
 
     <!-- Conteúdo principal da Página de Perfil -->
-    <main class="flex-grow p-6 bg-white shadow-xl rounded-lg m-4 w-full max-w-4xl mx-auto text-[#0a1f44]">
+    <main id="profile-content" class="flex-grow p-6 bg-white shadow-xl rounded-lg m-4 w-full max-w-4xl mx-auto text-[#0a1f44] hidden">
         <h1 class="text-3xl font-bold mb-6 text-center">Configurações do Meu Perfil</h1>
 
         <!-- Mensagens de Feedback -->
@@ -109,7 +122,10 @@
                 <div class="flex flex-col items-center space-y-4">
                     <img id="profileImagePreview" class="w-32 h-32 rounded-full object-cover border-4 border-blue-500 shadow-md" src="https://placehold.co/128x128/ccc/white?text=Avatar" alt="Foto de Perfil">
                     <input type="file" id="profileImageUpload" accept="image/*" class="text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer">
-                    <p class="text-sm text-gray-500">Clique na foto para trocar ou envie um arquivo (JPG, PNG).</p>
+                    <p class="text-sm text-gray-500 mt-1">Clique na foto para trocar ou envie um arquivo (JPG, PNG).</p>
+                    <p class="text-xs text-red-500 font-semibold" id="image-upload-warning">
+                        (Upload de fotos requer a ativação do Plano Blaze no Firebase Storage.)
+                    </p>
                 </div>
             </div>
 
@@ -119,6 +135,12 @@
             </button>
         </form>
     </main>
+
+    <!-- Loader - Visível enquanto o Firebase inicializa -->
+    <div id="loader-container" class="absolute inset-0 flex items-center justify-center bg-gray-100 bg-opacity-75 z-40">
+        <div class="loader"></div>
+        <p class="ml-4 text-[#0a1f44] text-lg font-semibold">Carregando perfil...</p>
+    </div>
 
     <!-- FOOTER - Consistente com as outras páginas da Vinkor -->
     <footer class="bg-[#0a1f44] text-white text-center py-6 mt-auto rounded-t-xl shadow-inner w-full">
@@ -139,7 +161,7 @@
         // Suas configurações Firebase (SUBSTITUA PELAS SUAS CREDENCIAIS REAIS)
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
         const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
-            apiKey: "YOUR_API_KEY",
+            apiKey: "YOUR_API_KEY", // <--- COLOQUE SUAS CREDENCIAIS REAIS AQUI
             authDomain: "YOUR_AUTH_DOMAIN",
             projectId: "YOUR_PROJECT_ID",
             storageBucket: "YOUR_STORAGE_BUCKET",
@@ -151,9 +173,11 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-        const storage = getStorage(app);
+        const storage = getStorage(app); // Inicializa o Storage
 
         // Referências aos elementos da UI
+        const profileContent = document.getElementById('profile-content');
+        const loaderContainer = document.getElementById('loader-container');
         const profileMessage = document.getElementById('profile-message');
         const profileForm = document.getElementById('profileForm');
         const accountEmail = document.getElementById('accountEmail');
@@ -165,7 +189,7 @@
         const bioInput = document.getElementById('bio');
         const profileImagePreview = document.getElementById('profileImagePreview');
         const profileImageUpload = document.getElementById('profileImageUpload');
-        const logoutBtnHeader = document.getElementById('logoutBtnHeader');
+        const logoutBtnHeader = document.getElementById('logoutBtnHeader'); // Botão Sair no header
 
         let currentUserId = null; // Para armazenar o UID do usuário logado
 
@@ -177,13 +201,16 @@
 
         // --- Funções de Autenticação e Carregamento de Perfil ---
 
-        // Proteção de rota e carregamento do perfil ao carregar a página
+        // Observa mudanças no estado de autenticação (login/logout)
         onAuthStateChanged(auth, async (user) => {
             if (user) {
+                // Usuário logado
                 currentUserId = user.uid;
                 accountEmail.textContent = user.email || 'N/A';
                 accountUid.textContent = user.uid;
                 await loadUserProfile(user.uid); // Carrega os dados do perfil do Firestore
+                loaderContainer.classList.add('hidden'); // Esconde o loader
+                profileContent.classList.remove('hidden'); // Mostra o conteúdo do perfil
             } else {
                 // Se não houver usuário logado, redireciona para a página de autenticação
                 window.location.href = 'auth.html';
@@ -232,18 +259,25 @@
 
             showMessage(profileMessage, 'Fazendo upload da imagem...', false);
             try {
-                const storageRef = ref(storage, `users/${currentUserId}/profile.jpg`); // Caminho da imagem no Storage
+                // Caminho da imagem no Storage: users/{userId}/profile.jpg
+                const storageRef = ref(storage, `users/${currentUserId}/profile.jpg`);
                 await uploadBytes(storageRef, file);
                 const imageUrl = await getDownloadURL(storageRef); // Pega a URL pública da imagem
 
                 profileImagePreview.src = imageUrl; // Atualiza a pré-visualização
                 // Salvar a URL da imagem no documento do perfil do usuário no Firestore
                 const userProfileDocRef = doc(db, `artifacts/${appId}/users/${currentUserId}/profile`, 'details');
-                await setDoc(userProfileDocRef, { profileImageUrl: imageUrl }, { merge: true }); // Usar merge para não sobrescrever outros campos
+                // Usar merge para não sobrescrever outros campos do perfil
+                await setDoc(userProfileDocRef, { profileImageUrl: imageUrl }, { merge: true });
                 showMessage(profileMessage, 'Foto de perfil atualizada com sucesso!');
             } catch (error) {
                 console.error("Erro ao fazer upload da imagem:", error);
-                showMessage(profileMessage, 'Erro ao fazer upload da imagem. Tente novamente.', true);
+                // Mensagem específica para erro de permissão do Storage
+                if (error.code === 'storage/unauthorized' || error.code === 'storage/quota-exceeded') {
+                    showMessage(profileMessage, 'Erro no upload: Ative o Plano Blaze no Firebase Storage para esta funcionalidade.', true);
+                } else {
+                    showMessage(profileMessage, 'Erro ao fazer upload da imagem. Tente novamente.', true);
+                }
             }
         });
 
@@ -269,8 +303,9 @@
 
             try {
                 // Salva os dados do perfil em um documento 'details' na subcoleção 'profile' do usuário
+                // Usar merge para não sobrescrever a URL da imagem se já existir
                 const userProfileDocRef = doc(db, `artifacts/${appId}/users/${currentUserId}/profile`, 'details');
-                await setDoc(userProfileDocRef, profileData, { merge: true }); // Usar merge para não sobrescrever a URL da imagem se já existir
+                await setDoc(userProfileDocRef, profileData, { merge: true });
                 showMessage(profileMessage, 'Perfil salvo com sucesso!', false);
             } catch (error) {
                 console.error("Erro ao salvar perfil:", error);
@@ -287,7 +322,7 @@
                 window.location.href = 'index.html'; // Redireciona para a página inicial
             } catch (error) {
                 console.error("Erro ao fazer logout:", error);
-                alert("Erro ao fazer logout. Tente novamente."); // Usando alert provisório
+                showMessage(profileMessage, "Erro ao fazer logout. Tente novamente.", true);
             }
         });
 
@@ -304,6 +339,10 @@
             match /artifacts/{appId}/users/{userId}/{documents=**} {
               allow read, write: if request.auth != null && request.auth.uid == userId;
             }
+            match /artifacts/{appId}/public/{documents=**} {
+              allow read: if true;
+              allow write: if request.auth != null;
+            }
           }
         }
 
@@ -314,8 +353,8 @@
         service firebase.storage {
           match /b/{bucket}/o {
             match /users/{userId}/{allPaths=**} {
-              allow read: if request.auth != null && request.auth.uid == userId; // O usuário pode ler suas próprias fotos
-              allow write: if request.auth != null && request.auth.uid == userId; // O usuário pode escrever suas próprias fotos
+              allow read: if request.auth != null && request.auth.uid == userId;
+              allow write: if request.auth != null && request.auth.uid == userId;
             }
           }
         }
