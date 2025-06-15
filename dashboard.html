@@ -4,7 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vinkor Dashboard</title>
+    <!-- Inclui o Tailwind CSS para estilização rápida e responsiva -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Define a fonte Inter como padrão, consistente com a página inicial -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
@@ -16,13 +18,18 @@
         }
     </style>
 </head>
+<!-- O corpo da página utiliza um layout flexbox para a sidebar e conteúdo principal -->
 <body class="flex min-h-screen bg-gray-100">
 
+    <!-- Sidebar - Barra de navegação lateral -->
     <aside class="w-64 bg-[#0a1f44] shadow-lg flex flex-col text-white rounded-r-xl">
         <div class="px-6 py-5 border-b border-gray-700">
+            <!-- Logo da Vinkor na sidebar, clicável para ir ao dashboard novamente -->
             <h2 class="text-3xl font-bold text-cyan-400 cursor-pointer" onclick="location.href='dashboard.html'">Vinkor</h2>
         </div>
         <nav class="flex-grow p-4 space-y-2 text-gray-200">
+            <!-- Links de navegação principais do dashboard -->
+            <!-- Use 'block' e padding para que toda a área do link seja clicável -->
             <a href="#anuncios-rolando" class="block px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out">Anúncios em Destaque</a>
             <a href="#overview" class="block px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out">Visão Geral</a>
             <a href="#servicos" class="block px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out">Serviços</a>
@@ -31,8 +38,10 @@
             <a href="motoristas.html" class="block px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out">Motoristas</a>
             <a href="motoboys.html" class="block px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300 ease-in-out">Motoboys</a>
             <a href="marketplace.html" class="block px-4 py-2 rounded-lg hover:bg-blue-700 font-semibold text-cyan-400 transition duration-300 ease-in-out">Marketplace</a>
-            </nav>
+            <!-- Adicione mais links conforme necessário para outras seções principais -->
+        </nav>
         <div class="px-6 py-5 border-t border-gray-700 text-gray-300">
+            <!-- Menu de usuário com detalhes expansíveis -->
             <details>
                 <summary class="cursor-pointer font-semibold text-lg hover:text-white transition duration-300 ease-in-out">Usuário Exemplo ▼</summary>
                 <div class="mt-3 space-y-2 text-sm">
@@ -45,41 +54,49 @@
         </div>
     </aside>
 
+    <!-- Conteúdo principal do Dashboard -->
     <main class="flex-grow p-6 bg-white shadow-xl rounded-lg m-4">
+        <!-- NOVA SEÇÃO: Anúncios em Destaque (agora no topo) -->
         <section id="anuncios-rolando" class="mb-8 bg-white p-6 rounded-lg shadow-md">
             <h2 class="text-2xl font-bold text-[#0a1f44] mb-4">Anúncios em Destaque</h2>
             <p class="text-gray-700 mb-4">Confira os anúncios mais recentes e relevantes para você:</p>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Exemplo de Anúncio 1 -->
                 <div class="bg-gray-50 rounded-lg p-4 shadow-sm border border-gray-200 hover:shadow-md transition duration-300 ease-in-out">
                     <h3 class="font-semibold text-lg text-blue-700 mb-1">Eletricista Residencial - Urgência 24h</h3>
                     <p class="text-gray-600 text-sm mb-2">Por: Pedro Silva - Leme, SP</p>
                     <p class="text-gray-500 text-sm">Instalação e manutenção elétrica, reparos rápidos. Atendimento em toda a região.</p>
                     <a href="#" class="mt-3 inline-block text-blue-500 hover:underline text-sm">Ver Detalhes</a>
                 </div>
+                <!-- Exemplo de Anúncio 2 -->
                 <div class="bg-gray-50 rounded-lg p-4 shadow-sm border border-gray-200 hover:shadow-md transition duration-300 ease-in-out">
                     <h3 class="font-semibold text-lg text-green-700 mb-1">Vaga: Desenvolvedor Web Júnior</h3>
                     <p class="text-gray-600 text-sm mb-2">Por: Tech Solutions Ltda. - Campinas, SP</p>
                     <p class="text-gray-500 text-sm">Buscamos desenvolvedor com experiência em HTML, CSS e JavaScript. CLT.</p>
                     <a href="#" class="mt-3 inline-block text-green-500 hover:underline text-sm">Ver Detalhes</a>
                 </div>
+                <!-- Exemplo de Anúncio 3 -->
                 <div class="bg-gray-50 rounded-lg p-4 shadow-sm border border-gray-200 hover:shadow-md transition duration-300 ease-in-out">
                     <h3 class="font-semibold text-lg text-orange-700 mb-1">Smartphone Usado - Ótimo Estado</h3>
                     <p class="text-gray-600 text-sm mb-2">Por: Ana Paula - Araras, SP</p>
                     <p class="text-gray-500 text-sm">Vendo iPhone 11, 128GB, sem detalhes. Acompanha carregador. Preço negociável.</p>
                     <a href="#" class="mt-3 inline-block text-orange-500 hover:underline text-sm">Ver Detalhes</a>
                 </div>
+                <!-- Exemplo de Anúncio 4 -->
                 <div class="bg-gray-50 rounded-lg p-4 shadow-sm border border-gray-200 hover:shadow-md transition duration-300 ease-in-out">
                     <h3 class="font-semibold text-lg text-purple-700 mb-1">Serviço de Diarista - Limpeza Pós-Obra</h3>
                     <p class="text-gray-600 text-sm mb-2">Por: Cláudia Santos - Piracicaba, SP</p>
                     <p class="text-gray-500 text-sm">Limpeza pesada e detalhada após obras. Orçamento sem compromisso.</p>
                     <a href="#" class="mt-3 inline-block text-purple-500 hover:underline text-sm">Ver Detalhes</a>
                 </div>
+                <!-- Exemplo de Anúncio 5 -->
                 <div class="bg-gray-50 rounded-lg p-4 shadow-sm border border-gray-200 hover:shadow-md transition duration-300 ease-in-out">
                     <h3 class="font-semibold text-lg text-cyan-700 mb-1">Motoboy para Entregas Rápidas</h3>
                     <p class="text-gray-600 text-sm mb-2">Por: Rafael Entregas - Rio Claro, SP</p>
                     <p class="text-gray-500 text-sm">Serviço de motoboy para documentos e pequenas encomendas. Agilidade e segurança.</p>
                     <a href="#" class="mt-3 inline-block text-cyan-500 hover:underline text-sm">Ver Detalhes</a>
                 </div>
+                <!-- Exemplo de Anúncio 6 -->
                 <div class="bg-gray-50 rounded-lg p-4 shadow-sm border border-gray-200 hover:shadow-md transition duration-300 ease-in-out">
                     <h3 class="font-semibold text-lg text-red-700 mb-1">Vaga: Motorista de Aplicativo - Urgente</h3>
                     <p class="text-gray-600 text-sm mb-2">Por: Transportes Express - São Carlos, SP</p>
@@ -92,6 +109,7 @@
             </div>
         </section>
 
+        <!-- Seção de Boas-Vindas (agora abaixo dos anúncios em destaque) -->
         <section id="overview" class="mt-12 mb-8">
             <h1 class="text-4xl font-bold mb-6 text-[#0a1f44]">Bem-vindo ao seu Dashboard, Usuário!</h1>
             <p class="text-gray-700 text-lg mb-6">Aqui você pode acessar rapidamente as principais funcionalidades da Vinkor e ver as últimas oportunidades e atualizações da sua região.</p>
@@ -135,6 +153,7 @@
             </div>
         </section>
 
+        <!-- Seção de Notificações Detalhadas (permanece abaixo das outras seções) -->
         <section id="notifications" class="mt-12 bg-white p-6 rounded-lg shadow-md">
             <h2 class="text-2xl font-bold text-[#0a1f44] mb-4">Atividade Recente</h2>
             <ul class="space-y-4">
