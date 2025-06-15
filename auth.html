@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vinkor - Login e Categorias</title>
+    <!-- Tailwind CSS CDN para estilização -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Fonte Inter, consistente com o design da Vinkor -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(to bottom right, #0a1f44, #005eff); /* Fundo gradiente da Vinkor */
+        }
+        .container-card {
+            background-color: #ffffff;
+            color: #0a1f44;
+            border-radius: 1rem; /* Cantos arredondados */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* Sombra suave */
+        }
+        .input-field {
+            padding: 0.75rem; /* py-3 */
+            border-radius: 0.5rem; /* rounded-lg */
+            border: 1px solid #d1d5db; /* border-gray-300 */
+            width: 100%;
+            transition: all 0.2s ease-in-out;
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: #3b82f6; /* blue-500 */
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5); /* ring-blue-500 */
+        }
+        .btn-primary {
+            background-color: #005eff; /* Azul principal da Vinkor */
+            color: #ffffff;
+            font-weight: 600; /* font-semibold */
+            padding: 0.75rem 1.5rem; /* py-3 px-6 */
+            border-radius: 0.5rem; /* rounded-lg */
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .btn-primary:hover {
+            background-color: #004acb; /* Um tom mais escuro no hover */
+            transform: scale(1.05); /* Efeito de escala no hover */
+        }
+        .btn-secondary {
+            background-color: #1e3a8a; /* Um azul mais escuro */
+            color: #ffffff;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+        }
+        .btn-secondary:hover {
+            background-color: #12296d;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+
+    <div class="container-card w-full max-w-md p-8 space-y-6">
+        <h2 class="text-3xl font-bold text-center text-[#0a1f44]">Acesso Vinkor</h2>
+        <div id="auth-section" class="space-y-4">
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">Email:</label>
+                <input type="email" id="email" class="input-field mt-1" placeholder="seu.email@exemplo.com">
+            </div>
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700">Senha:</label>
+                <input type="password" id="password" class="input-field mt-1" placeholder="Mínimo 6 caracteres">
+            </div>
+            <button id="signupBtn" class="btn-primary w-full">Cadastrar</button>
+            <button id="loginBtn" class="btn-secondary w-full">Entrar</button>
+            <div id="auth-message" class="text-center text-sm font-medium mt-2"></div>
+        </div>
+
+        <div id="logged-in-section" class="space-y-4 hidden">
+            <p class="text-lg font-semibold">Bem-vindo(a), <span id="user-email"></span>!</p>
+            <p class="text-sm text-gray-600">Seu ID de usuário: <span id="user-uid"></span></p>
+
+            <h3 class="text-xl font-bold mt-6 text-[#0a1f44]">Testar Firestore: Categorias</h3>
+            <div class="space-y-3">
+                <div>
+                    <label for="categoryName" class="block text-sm font-medium text-gray-700">Nome da Categoria:</label>
+                    <input type="text" id="categoryName" class="input-field mt-1" placeholder="Ex: Tecnologia, Moda, Carros">
+                </div>
+                <button id="addCategoryBtn" class="btn-primary w-full">Adicionar Categoria</button>
+                <div id="firestore-message" class="text-center text-sm font-medium mt-2"></div>
+            </div>
+
+            <h3 class="text-xl font-bold mt-6 text-[#0a1f44]">Categorias Salvas:</h3>
+            <ul id="categoriesList" class="list-disc list-inside text-gray-700 space-y-1">
+                <!-- As categorias serão listadas aqui -->
+            </ul>
+            <button id="loadCategoriesBtn" class="btn-secondary w-full">Recarregar Categorias</button>
+
+            <button id="logoutBtn" class="btn-primary w-full bg-red-500 hover:bg-red-600 mt-8">Sair</button>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script type="module">
+        // Importa os módulos necessários do Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import {
+            getAuth,
+            createUserWithEmailAndPassword,
+            signInWithEmailAndPassword,
+            signOut,
+            onAuthStateChanged, // Para detectar mudanças no estado de autenticação
+            signInWithCustomToken, // Para autenticação inicial do Canvas
+            signInAnonymously // Para caso não haja token inicial
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import {
+            getFirestore,
+            doc,
+            setDoc,
+            getDoc,
+            collection,
+            query,
+            getDocs // Para listar coleções
+        } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Variáveis globais (serão injetadas pelo ambiente Canvas)
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id'; // Usar 'default-app-id' para testes locais fora do Canvas
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {
+            // Configurações Firebase de exemplo para desenvolvimento local.
+            // SUBSTITUA ESTAS CREDENCIAIS COM AS SUAS DO PROJETO FIREBASE REAL!
+            // Para obter: Vá no console do Firebase -> Configurações do projeto -> Suas apps -> Adicionar app -> Web
+            apiKey: "YOUR_API_KEY", // <--- SUBSTITUA ESTE VALOR
+            authDomain: "YOUR_AUTH_DOMAIN", // <--- SUBSTITUA ESTE VALOR
+            projectId: "YOUR_PROJECT_ID", // <--- SUBSTITUA ESTE VALOR
+            storageBucket: "YOUR_STORAGE_BUCKET", // <--- SUBSTITUA ESTE VALOR
+            messagingSenderId: "YOUR_MESSAGING_SENDER_ID", // <--- SUBSTITUA ESTE VALOR
+            appId: "YOUR_APP_ID", // <--- SUBSTITUA ESTE VALOR
+            measurementId: "YOUR_MEASUREMENT_ID" // <--- SUBSTITUA ESTE VALOR (opcional)
+        };
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        // Inicializa o Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Referências aos elementos da UI
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const signupBtn = document.getElementById('signupBtn');
+        const loginBtn = document.getElementById('loginBtn');
+        const authMessage = document.getElementById('auth-message');
+        const loggedInSection = document.getElementById('logged-in-section');
+        const authSection = document.getElementById('auth-section');
+        const userEmailSpan = document.getElementById('user-email');
+        const userUidSpan = document.getElementById('user-uid');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const categoryNameInput = document.getElementById('categoryName');
+        const addCategoryBtn = document.getElementById('addCategoryBtn');
+        const firestoreMessage = document.getElementById('firestore-message');
+        const categoriesList = document.getElementById('categoriesList');
+        const loadCategoriesBtn = document.getElementById('loadCategoriesBtn');
+
+        let currentUserId = null; // Para armazenar o UID do usuário logado
+
+        // --- Funções de Autenticação ---
+
+        // Função para exibir mensagens na UI
+        function showMessage(element, message, isError = false) {
+            element.textContent = message;
+            element.className = isError ? 'text-red-500 font-bold' : 'text-green-500 font-bold';
+        }
+
+        // Função para gerenciar o estado da UI baseado no login
+        function updateUI(user) {
+            if (user) {
+                // Usuário logado
+                currentUserId = user.uid;
+                userEmailSpan.textContent = user.email || 'Usuário Anônimo';
+                userUidSpan.textContent = user.uid;
+                authSection.classList.add('hidden');
+                loggedInSection.classList.remove('hidden');
+                // Carrega as categorias do usuário automaticamente ao logar
+                loadCategories();
+            } else {
+                // Usuário deslogado
+                currentUserId = null;
+                authSection.classList.remove('hidden');
+                loggedInSection.classList.add('hidden');
+                showMessage(authMessage, ''); // Limpa mensagem
+                categoriesList.innerHTML = ''; // Limpa a lista de categorias
+            }
+        }
+
+        // Observa mudanças no estado de autenticação (login/logout)
+        onAuthStateChanged(auth, async (user) => {
+            if (!user && initialAuthToken) {
+                // Tenta logar com o token inicial do Canvas, se houver e não estiver logado
+                try {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                    console.log("Logado com token inicial do Canvas.");
+                } catch (error) {
+                    console.error("Erro ao logar com token inicial:", error);
+                    // Se o token falhar, loga anonimamente
+                    try {
+                        await signInAnonymously(auth);
+                        console.log("Logado anonimamente.");
+                    }
+                    catch (anonError) { // Adicionado catch para o signInAnonymously
+                        console.error("Erro ao logar anonimamente:", anonError);
+                        showMessage(authMessage, "Erro de autenticação. Tente novamente.", true);
+                    }
+                }
+            } else if (!user && !initialAuthToken) {
+                // Se não houver token e não estiver logado, loga anonimamente (para teste local)
+                try {
+                    await signInAnonymously(auth);
+                    console.log("Logado anonimamente para teste local.");
+                } catch (anonError) {
+                    console.error("Erro ao logar anonimamente para teste local:", anonError);
+                    showMessage(authMessage, "Erro de autenticação. Tente novamente.", true);
+                }
+            }
+            updateUI(auth.currentUser); // Atualiza a UI com o estado atual
+        });
+
+        // Event listener para Cadastro de Usuário
+        signupBtn.addEventListener('click', async () => {
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            if (!email || !password) {
+                showMessage(authMessage, 'Por favor, preencha email e senha.', true);
+                return;
+            }
+            if (password.length < 6) {
+                showMessage(authMessage, 'A senha deve ter no mínimo 6 caracteres.', true);
+                return;
+            }
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                showMessage(authMessage, `Usuário ${userCredential.user.email} cadastrado com sucesso!`);
+                // Redirecionar para o dashboard após o cadastro
+                // window.location.href = 'dashboard.html';
+            } catch (error) {
+                console.error("Erro no cadastro:", error);
+                let errorMessage = "Erro no cadastro. Tente novamente.";
+                if (error.code === 'auth/email-already-in-use') {
+                    errorMessage = 'Este email já está em uso.';
+                } else if (error.code === 'auth/invalid-email') {
+                    errorMessage = 'Email inválido.';
+                }
+                showMessage(authMessage, errorMessage, true);
+            }
+        });
+
+        // Event listener para Login de Usuário
+        loginBtn.addEventListener('click', async () => {
+            const email = emailInput.value;
+            const password = passwordInput.value;
+            if (!email || !password) {
+                showMessage(authMessage, 'Por favor, preencha email e senha.', true);
+                return;
+            }
+            try {
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                showMessage(authMessage, `Bem-vindo(a) de volta, ${userCredential.user.email}!`);
+                // Redirecionar para o dashboard após o login
+                // window.location.href = 'dashboard.html';
+            } catch (error) {
+                console.error("Erro no login:", error);
+                let errorMessage = "Email ou senha incorretos. Tente novamente.";
+                if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+                    errorMessage = 'Email ou senha inválidos.';
+                } else if (error.code === 'auth/invalid-email') {
+                    errorMessage = 'Email inválido.';
+                }
+                showMessage(authMessage, errorMessage, true);
+            }
+        });
+
+        // Event listener para Logout
+        logoutBtn.addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+                showMessage(authMessage, 'Você foi desconectado(a).');
+                // Redirecionar para a página inicial
+                // window.location.href = 'index.html';
+            } catch (error) {
+                console.error("Erro ao desconectar:", error);
+                showMessage(authMessage, 'Erro ao desconectar. Tente novamente.', true);
+            }
+        });
+
+        // --- Funções do Firestore (Exemplo com Categorias) ---
+
+        // Função para adicionar uma categoria ao Firestore
+        addCategoryBtn.addEventListener('click', async () => {
+            const categoryName = categoryNameInput.value.trim();
+            if (!categoryName) {
+                showMessage(firestoreMessage, 'Por favor, digite o nome da categoria.', true);
+                return;
+            }
+            if (!currentUserId) {
+                showMessage(firestoreMessage, 'Você precisa estar logado para adicionar categorias.', true);
+                return;
+            }
+
+            try {
+                // Salva a categoria em uma subcoleção 'categorias' do documento do usuário
+                // Coleção: /artifacts/{appId}/users/{userId}/categorias/{categoryId}
+                const categoryRef = doc(db, `artifacts/${appId}/users/${currentUserId}/categorias`, categoryName);
+                await setDoc(categoryRef, { name: categoryName, createdAt: new Date() });
+                showMessage(firestoreMessage, `Categoria "${categoryName}" adicionada com sucesso!`);
+                categoryNameInput.value = ''; // Limpa o campo
+                loadCategories(); // Recarrega a lista para mostrar a nova categoria
+            } catch (error) {
+                console.error("Erro ao adicionar categoria:", error);
+                showMessage(firestoreMessage, 'Erro ao adicionar categoria. Tente novamente.', true);
+            }
+        });
+
+        // Função para carregar e exibir as categorias do Firestore
+        async function loadCategories() {
+            categoriesList.innerHTML = '<li>Carregando categorias...</li>'; // Limpa e mostra status
+            if (!currentUserId) {
+                categoriesList.innerHTML = '<li>Faça login para ver suas categorias.</li>';
+                return;
+            }
+
+            try {
+                // Consulta a subcoleção 'categorias' do documento do usuário logado
+                const q = query(collection(db, `artifacts/${appId}/users/${currentUserId}/categorias`));
+                const querySnapshot = await getDocs(q);
+
+                categoriesList.innerHTML = ''; // Limpa a lista antes de adicionar
+                if (querySnapshot.empty) {
+                    categoriesList.innerHTML = '<li>Nenhuma categoria encontrada.</li>';
+                    return;
+                }
+
+                querySnapshot.forEach((doc) => {
+                    const li = document.createElement('li');
+                    li.textContent = doc.data().name;
+                    categoriesList.appendChild(li);
+                });
+            } catch (error) {
+                console.error("Erro ao carregar categorias:", error);
+                categoriesList.innerHTML = '<li>Erro ao carregar categorias.</li>';
+            }
+        }
+
+        // Event listener para recarregar categorias
+        loadCategoriesBtn.addEventListener('click', loadCategories);
+
+        /*
+        *** REGRAS DE SEGURANÇA DO FIRESTORE (Importante!) ***
+
+        Para que o Firestore funcione corretamente e de forma segura, você precisará configurar as regras de segurança
+        no console do Firebase (Firestore Database -> Regras).
+        Aqui está um exemplo básico de regras para o seu projeto:
+
+        rules_version = '2';
+        service cloud.firestore {
+          match /databases/{database}/documents {
+
+            // Regras para dados privados do usuário (ex: categorias, perfis individuais)
+            // Permite leitura/escrita APENAS se o usuário estiver autenticado E for o dono dos dados.
+            match /artifacts/{appId}/users/{userId}/{documents=**} {
+              allow read, write: if request.auth != null && request.auth.uid == userId;
+            }
+
+            // Regras para dados públicos ou que podem ser lidos por qualquer um (ex: anúncios públicos)
+            // Exemplo: match /artifacts/{appId}/public/anuncios/{anuncioId} {
+            //            allow read: if true; // Qualquer um pode ler
+            //            allow write: if request.auth != null; // Apenas logado pode escrever
+            //          }
+            // Adapte conforme sua necessidade!
+          }
+        }
+
+        LEMBRE-SE: Para desenvolvimento, pode-se usar regras mais permissivas.
+        Para produção, as regras devem ser MUITO rigorosas para evitar acesso não autorizado.
+        */
+    </script>
+</body>
+</html>
