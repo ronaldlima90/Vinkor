@@ -54,7 +54,7 @@
                             class="px-3 py-2 rounded-lg text-[#0a1f44] focus:outline-none focus:ring-2 focus:ring-cyan-400 shadow-inner"
                         />
                     </div>
-                    <!-- Botão Login (AGORA APONTA PARA auth.html) -->
+                    <!-- Botão Login (agora redireciona para auth.html) -->
                     <a
                         href="auth.html"
                         id="loginBtn"
@@ -91,7 +91,7 @@
         </div>
     </section>
 
-    <!-- OFFERINGS - O que o usuário pode fazer na Vinkor -->
+    <!-- OFFERINGS -->
     <section id="offerings" class="bg-white text-[#0a1f44] text-center py-16 px-6 rounded-xl mx-auto max-w-7xl my-12 shadow-2xl">
         <h2 class="text-4xl font-bold mb-10">O que você pode fazer na Vinkor</h2>
         <div class="space-y-6 text-xl max-w-3xl mx-auto">
@@ -113,7 +113,7 @@
         </div>
     </section>
 
-    <!-- ABOUT - Sobre a Vinkor -->
+    <!-- ABOUT -->
     <section id="about" class="bg-gray-100 text-[#0a1f44] text-center py-16 px-6 rounded-xl mx-auto max-w-7xl my-12 shadow-2xl">
         <h2 class="text-4xl font-bold mb-6">Sobre a Vinkor</h2>
         <p class="max-w-3xl mx-auto text-lg leading-relaxed">
@@ -121,7 +121,7 @@
         </p>
     </section>
 
-    <!-- CONTACT - Fale Conosco -->
+    <!-- CONTACT -->
     <section id="contact" class="bg-white text-[#0a1f44] text-center py-16 px-6 rounded-xl mx-auto max-w-7xl my-12 shadow-2xl">
         <h2 class="text-4xl font-bold mb-6">Fale Conosco</h2>
         <p class="text-xl mb-4">Tem dúvidas, sugestões ou quer saber mais sobre a Vinkor?</p>
@@ -131,7 +131,7 @@
         </div>
     </section>
 
-    <!-- CALL TO ACTION / LOGIN - Chamada para ação para acessar a conta (AGORA REDIRECIONA PARA auth.html) -->
+    <!-- CALL TO ACTION / LOGIN -->
     <section id="call-to-action" class="bg-gradient-to-r from-[#005eff] to-[#0a1f44] text-white text-center py-20 px-6 rounded-xl mx-auto max-w-7xl my-12 shadow-2xl">
         <h2 class="text-4xl font-bold mb-6">Pronto para se conectar?</h2>
         <p class="text-xl mb-8">Junte-se à Vinkor e descubra um mundo de oportunidades!</p>
@@ -151,23 +151,9 @@
     </footer>
 
     <script>
-        // Os scripts originais de loginBtn e mainLoginBtn foram removidos/modificados
-        // porque agora o redirecionamento é feito diretamente pelo href="auth.html"
-        // no HTML. No entanto, se você quiser adicionar alguma lógica de rastreamento
-        // ou outras ações ANTES de redirecionar, você pode reativar um event listener aqui.
-        // Exemplo (se precisar de uma ação JS antes de navegar):
-        // document.getElementById('loginBtn').addEventListener('click', function(e) {
-        //   e.preventDefault(); // Impede a navegação direta
-        //   // Faça alguma coisa, como registrar um evento de analytics
-        //   console.log('Botão de login clicado, redirecionando para autenticação...');
-        //   window.location.href = 'auth.html';
-        // });
-
-        // document.getElementById('mainLoginBtn').addEventListener('click', function(e) {
-        //   e.preventDefault(); // Impede a navegação direta
-        //   console.log('Botão "Comece Agora" clicado, redirecionando para autenticação...');
-        //   window.location.href = 'auth.html';
-        // });
+        // Não há scripts JS aqui para redirecionamento, pois o href já faz isso.
+        // O event listener para loginBtn e mainLoginBtn foram removidos/modificados
+        // porque agora o redirecionamento é feito diretamente pelo href="auth.html".
     </script>
 
 </body>
